@@ -33,13 +33,25 @@ will fill any missing data for a year by filling the gap by last available value
 
 * [Get preidct data](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/get_predict_data.py)call the saved models from last step and saved pridicted home load and ac output for each home. It merges the predcit two values with other features of states and save the output as `predicted_data/predicted_hhdata_<home id>.csv`.
 
+### [Baseline](https://github.com/sustainable-computing/EnergyBoost/tree/master/Baseline)
+Contains different rule based baselines for different scenarios.
+* [Get no solar](https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nosolar.py) Get baseline strategy for no solar and no batery installed.
+
+* [Get no battery](https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nostorage.py) Get baseline strategy for no battery installed and with solar installed.
+
+* [Get RBC](https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_rbc.py) Get a baseline strategy based on rule based TOU price. 
+
+These three implementations will call assocaited environments developed for these different scenarios.
+
+
+
 ### [MPC](https://github.com/sustainable-computing/EnergyBoost/tree/master/MPC)
 This part contains implementation of model predictive control. 
 * [The main code](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC.py) for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.
 
-* [create hourly price](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py) changes unix time to UTC time and generate a hourly price table
+* [Create hourly price](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py) changes unix time to UTC time and generate a hourly price table
 
-* [create TOU price table](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py) creates a TOU price table for a year, so it can be used loaded as matrix in the solver.
+* [Create TOU price table](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py) creates a TOU price table for a year, so it can be used loaded as matrix in the solver.
 
 
 
