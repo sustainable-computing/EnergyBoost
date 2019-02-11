@@ -87,7 +87,7 @@ For code of all controllers:
   
 e.g. `python MPC.py -0.2 6.4 2 processed_hhdata_59_2.csv`
 
-#### Some tools for running scripts
+#### [Some tools for running scripts](https://github.com/sustainable-computing/EnergyBoost/tree/master/Scripts)
 * [Run all scenarios given home id](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/process_calculate.sh)will run all scenarios of homes given home id.
 
 * [Run all scenarios give filder name](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/process_calculate_batch.sh)will run all scenarios of all homes inside one given folder.
