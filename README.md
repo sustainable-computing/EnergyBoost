@@ -27,3 +27,31 @@ will fill any missing data for a year by filling the gap by last available value
 * [Add history](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/add_history.rb)will match data for each time slot with its history data of previous time slot and data one week before, these data can be used as features for prediction.
 
 * [GHI model figure](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model_fig.ipynb) and [HL model figure](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model_fig.ipynb) compare differnt models for predicting ac power and home load and generate a plot showing the nRMSE of different models.
+
+
+* [GHI model](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model_more.ipynb) and [HL model](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model_fig-more.ipynb) train the best models for all homes predicting ac output and homeload. The trainted models are saved so that it can be used repeatly without training again.
+
+* [Get preidct data](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/get_predict_data.py)call the saved models from last step and saved pridicted home load and ac output for each home. It merges the predcit two values with other features of states and save the output as `predicted_data/predicted_hhdata_<home id>.csv`.
+
+### [MPC](https://github.com/sustainable-computing/EnergyBoost/tree/master/MPC)
+This part contains implementation of model predictive control. 
+* [The main code](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC.py) for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in differnt scenarios like hourly price and Net metering.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
