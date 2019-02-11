@@ -66,7 +66,7 @@ Implementation of Reinforcement Learning method
 
 ### [Compile Results and Plots](https://github.com/sustainable-computing/EnergyBoost/tree/master/Plot)
 Scripts for compile results and genrate plots:
-* [Get Feasible Actions] Results returned by the contoller using predicted data are sometimes not feasible, it will map the learned action to feasible actions and recalculate the bills and record the feasible actions.
+* [Get Feasible Actions](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/calculate_solver_bill_new.py) Results returned by the contoller using predicted data are sometimes not feasible, it will map the learned action to feasible actions and recalculate the bills and record the feasible actions.
 
 * [Compile results of all homes](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/compile_bill_sce.py) will compile results of all controllers of one given home or all homes and requried scenrios, will write results of the recalated bill in to a new table and create line plots of cumulative bills of a year. 
 
@@ -79,6 +79,28 @@ Scripts for compile results and genrate plots:
 * [Calulate PAR of contoller](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/mpc_par.ipynb) will calulate the average PAR of all homes of all days of a year.
 
 * [Generate violin plots of bills of all controllers](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/violinplot_price4.py)will create violin plots of all contollers to show the distrubution of bills of all homes of a given scenario.
+
+### Usage and shell scripts
+For code of all controllers: 
+
+`python <controller_method>.py <solar tariff price> <battery size> <Maximum Charging/Discharging rate> <Data file of one home>`
+  
+e.g. `python MPC.py -0.2 6.4 2 processed_hhdata_59_2.csv`
+
+#### Some tools for running scripts
+* [Run all scenarios given home id](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/process_calculate.sh)will run all scenarios of homes given home id.
+
+* [Run all scenarios give filder name](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/process_calculate_batch.sh)will run all scenarios of all homes inside one given folder.
+
+* [Run scripts on Compute Canada solver](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/process_base.sh) when running simnulations on compute canada server like Graham, hearder file for assign compute resources for one job need to be added. 
+
+For more details about schedule jobs on compute canada, please refer to [running jobs on Compute Canada](https://docs.computecanada.ca/wiki/Running_jobs)
+
+* [List of all home id](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/all_id.py) generate list of all home id which will be used to create seprate jobs for different homes on server.
+
+* [Create shell scripts for one given home](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/create-scipts.py)will create shell scripts to run scenarios for all given home on server.
+
+* [Run indiviual jobs for all homes](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/run_all_scripts.sh) will create one single jobs for all homes so that mutiple jobs can be run simultaneously on Compute Canada server.
 
 
 
