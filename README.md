@@ -35,7 +35,11 @@ will fill any missing data for a year by filling the gap by last available value
 
 ### [MPC](https://github.com/sustainable-computing/EnergyBoost/tree/master/MPC)
 This part contains implementation of model predictive control. 
-* [The main code](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC.py) for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in differnt scenarios like hourly price and Net metering.
+* [The main code](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC.py) for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.
+
+* [create hourly price](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py) changes unix time to UTC time and generate a hourly price table
+
+* [create TOU price table](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py) creates a TOU price table for a year, so it can be used loaded as matrix in the solver.
 
 
 
