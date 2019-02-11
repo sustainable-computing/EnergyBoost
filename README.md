@@ -58,6 +58,40 @@ This part contains implementation of model predictive control.
 
 * [Create TOU price table](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py) creates a TOU price table for a year, so it can be used loaded as matrix in the solver.
 
+### [RL](https://github.com/sustainable-computing/EnergyBoost/tree/master/RL)
+Implementation of Reinforcement Learning method
+* [A2C](https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/solar_a2c_nonlinear.py) Implementation of Actor Critic method which will genetrate the stratgy given states and reward.
+
+* [Environment](https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/environment.py) Formulate the problem into MDP environment, contains features of reset initialize states, calulate reward of a given states, and simulate next states.
+
+### [Compile Results and Plots](https://github.com/sustainable-computing/EnergyBoost/tree/master/Plot)
+Scripts for compile results and genrate plots:
+* [Get Feasible Actions] Results returned by the contoller using predicted data are sometimes not feasible, it will map the learned action to feasible actions and recalculate the bills and record the feasible actions.
+
+* [Compile results of all homes](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/compile_bill_sce.py) will compile results of all controllers of one given home or all homes and requried scenrios, will write results of the recalated bill in to a new table and create line plots of cumulative bills of a year. 
+
+* [Plot ground truth](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/PolicyViz.ipynb) will plot one week ground truth of one home including home load, solar output and optimal action.
+
+* [Plot controller action](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/PolicyViz-controller.ipynb) will plot learned policy of all controllers of one specific period of year. 
+
+* [Genrate ROI table](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/bill_table2.py) will read in bill results of all controllers and calulate needed information for ROI.
+
+* [Calulate PAR of contoller](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/mpc_par.ipynb) will calulate the average PAR of all homes of all days of a year.
+
+* [Generate violin plots of bills of all controllers](https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/violinplot_price4.py)will create violin plots of all contollers to show the distrubution of bills of all homes of a given scenario.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
