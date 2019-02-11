@@ -44,6 +44,11 @@ Contains different rule based baselines for different scenarios.
 These three implementations will call assocaited environments developed for these different scenarios.
 
 
+### [DLC](https://github.com/sustainable-computing/EnergyBoost/tree/master/DLC)
+Contains implementation of direct mapping method.
+* [Mapping](https://github.com/sustainable-computing/EnergyBoost/blob/master/DLC/mapping.ipynb) Mapping from avaiable features of each time slots to optimal actions solved by the solver and oracle data. 
+
+
 
 ### [MPC](https://github.com/sustainable-computing/EnergyBoost/tree/master/MPC)
 This part contains implementation of model predictive control. 
