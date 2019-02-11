@@ -17,4 +17,5 @@ the Gurobi Programming solver for optimization.
 
 ## Table of contents
 ### [Data prepocessing](https://github.com/sustainable-computing/EnergyBoost/tree/master/data_processing)
-* [Raw data processing](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/raw_data_processing.ipynb) merges home load data together with associated solar data and seprated them by home id. Output files are saved as `dataprocessed_hhdata_<home id>.csv
+* [Raw data processing](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/raw_data_processing.ipynb) merges home load data together with associated solar data and seprated them by home id. Output files are saved as `dataprocessed_hhdata_<home id>.csv`
+* 
