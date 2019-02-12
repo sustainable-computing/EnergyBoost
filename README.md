@@ -12,6 +12,26 @@ as an optimal control problem over a finite time horizon.
 EnergyBoost is python-based and you can easily install all required library through
 `pip install` or `conda install` for conda users. 
 
+### Required Packages and versions
+
+| Packages      | Version       |
+| ------------- |:-------------:| 
+| pandas        | 0.23.0 |
+| numpy         |   1.14.2   |
+| pvlib         |   0.5.2    |
+| matplotlib    | 2.1.2 |
+| scikit-learn  | 0.20.2 |
+| tensorflow-gpu | 1.12.0 |
+| cxvpy         | 1.0.6 |
+| gurobipy      | 8.1.0 |
+| gym           | 0.10.5 |
+
+
+
+
+
+
+
 Please refer to [Gurobi webpage](http://www.gurobi.com/index) to install
 the Gurobi Programming solver for optimization.
 
