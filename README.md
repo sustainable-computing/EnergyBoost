@@ -26,14 +26,11 @@ EnergyBoost is python-based and you can easily install all required library thro
 | gurobipy      | 8.1.0 |
 | gym           | 0.10.5 |
 
+### Installation
+You can easily install all required package by run [installation script](https://github.com/sustainable-computing/EnergyBoost/blob/master/Scripts/installation.sh)
 
-
-
-
-
-
-Please refer to [Gurobi webpage](http://www.gurobi.com/index) to install
-the Gurobi Programming solver for optimization.
+For more details and troubleshooting about installation of tensorflow and gurobi, please refer to 
+[Gurobi](http://www.gurobi.com/index) and [tensorflow](https://www.tensorflow.org/install/pip) webpages.
 
 ## Table of contents
 ### [Data prepocessing](https://github.com/sustainable-computing/EnergyBoost/tree/master/data_processing)
