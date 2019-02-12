@@ -29,7 +29,7 @@ will fill any missing data for a year by filling the gap by last available value
 * [GHI model figure](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model_fig.py) and [HL model figure](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model_fig-more.py) compare differnt models for predicting ac power and home load and generate a plot showing the nRMSE of different models.
 
 
-* [GHI model](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model_more.py) and [HL model](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model.py) train the best models for all homes predicting ac output and homeload. The trainted models are saved so that it can be used repeatly without training again.
+* [GHI model](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model.py) and [HL model](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model.py) train the best models for all homes predicting ac output and homeload. The trainted models are saved so that it can be used repeatly without training again.
 
 * [Get preidct data](https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/get_predict_data.py)call the saved models from last step and saved pridicted home load and ac output for each home. It merges the predcit two values with other features of states and save the output as `predicted_data/predicted_hhdata_<home id>.csv`.
 
