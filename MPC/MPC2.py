@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 import os,sys
 import csv
+import pathlib
 import matplotlib.pyplot as plt
 from sklearn.externals import joblib
 
@@ -68,7 +69,7 @@ price_weekend = np.tile(np.array([0.065]), 24)
 # # weekly price starting from Monday
 # P_grid = np.tile(price_week, numweeks)
 # #P_grid = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
-# #P_table = pd.read_csv('bill/power_price.csv')
+P_table = pd.read_csv('price_tou.csv')[168:8736]
 
 P_solar = solar_export_rate*np.ones(MAX_TS)
 #P_solar = -P_grid
@@ -162,35 +163,7 @@ def compute(hour_var,battery_var,last):
     print("This is G",G)
     # L= table['use'][hour_var:MAX_TS+hour_var].values
     # G = table['ac'][hour_var:MAX_TS+hour_var].values
-    P_grid = np.array([])
-    #P_grid = P_table['price'][hour_var:MAX_TS+hour_var].values
-    #for i in range(hour_var,hour_var+24,24):
-        #print('first hour of day',i)
-        # month = table['month'].iloc[i]
-        # hour = table['hour'].iloc[i]
-        # week = table['is_weekday'].iloc[i]
-    month = float(state[hour_var][7])
-    hour = float(state[hour_var][8])
-    week = float(state[hour_var][6])
-
-
-    if month <=4 or month >= 11:
-        #print("winter")
-        if week:
-            #print("weekday")
-            P_grid = np.append(P_grid,price_weekday_winter)
-        else:
-            #print("weekend")
-            P_grid = np.append(P_grid,price_weekend)
-    else:
-        #print("summer")
-        if week:
-            #print("weekday")
-            P_grid = np.append(P_grid,price_weekday_summer)
-        else:
-            #print("weekend")
-            P_grid = np.append(P_grid,price_weekend)
-
+    P_grid = P_table['price'][hour_var:MAX_TS+hour_var].values
 
 
     #print("This is P_grid")
@@ -257,17 +230,18 @@ def compute(hour_var,battery_var,last):
 
 
     A[0] = cleanup(AC[0].value) + cleanup(AD[0].value)
-    writer.writerow([hour_var+1,A[0],total_reward,FG[0].value*P_grid[0]+TG[0].value*P_solar[0],FG[0].value])
+    writer.writerow([hour_var+1,A[0],total_reward,FG[0].value*P_grid[0]+TG[0].value*P_solar[0],FG[0].value*P_grid[0],TG[0].value*P_solar[0]])
 
 
 if __name__ == '__main__':
     init_ground_truth(sys.argv[4])
-    directory="{}_2_mpc".format(homeid)
-    if not os.path.exists(directory):
-        os.makedirs(directory)
-    csvfile = open("{}_2_mpc/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
+    # directory="{}_4_mpc_hour".format(homeid)
+    # if not os.path.exists(directory):
+    #     os.makedirs(directory)
+    pathlib.Path("mpcnew_2/{}_2_mpcnew".format(homeid)).mkdir(parents=True, exist_ok=True)
+    csvfile = open("mpcnew_2/{}_2_mpcnew/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
-    writer.writerow(["Hour", "Best_Action","total_reward","hour_Bill","FG"])
+    writer.writerow(["Hour", "Best_Action","total_reward","hour_Bill","FG_bill","TG_bill"])
     for i in range (start_point,end_point):
         #print("this is index",i)
         if i==end_point-1:
