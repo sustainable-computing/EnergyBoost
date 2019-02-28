@@ -69,7 +69,7 @@ Contains implementation of direct mapping method.
 
 ### [MPC](https://github.com/sustainable-computing/EnergyBoost/tree/master/MPC)
 This part contains implementation of model predictive control. 
-* [The main code](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC.py) for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.
+* [The main code](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC2.py) for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.
 
 * [Create hourly price](https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py) changes unix time to UTC time and generate a hourly price table
 
