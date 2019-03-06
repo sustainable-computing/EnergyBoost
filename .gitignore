@@ -1,2 +1,3 @@
 /.idea
 /sphinx/_build
+*.pyc
