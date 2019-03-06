@@ -1,3 +1,6 @@
+"""
+The main code for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering
+"""
 # !pip install -f https://download.mosek.com/stable/wheel/index.html Mosek
 #import mosek
 
