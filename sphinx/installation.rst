@@ -6,34 +6,44 @@ Installation
 Overview
 ========
 
-``ODToolkit`` is a Python package that offers open-source implementation of various occupancy detection models and allows
-for comprehensive evaluation of these models on publicly available datasets collected from residential and commercial
-buildings.
+EnergyBoost is python-based and you can easily install all required library through
+`pip install` or `conda install` for conda users.
 
 Pre-request: `Python 3.4+ <https://www.python.org/downloads/>`_.
 
-Downloading ODToolkit
-=====================
+Required Packages and versions
+====================================
+==============     ==========
+  A                  B
+==============     ==========
+pandas             0.23.0
+numpy              1.14.2
+pvlib              0.5.2
+matplotlib         2.1.2
+scikit-learn       0.20.2
+tensorflow-gpu     1.12.0
+cxvpy              1.0.6
+gurobipy           8.1.0
+gym                0.10.5
+==============     ==========
 
-Via Pip
--------
 
-Unavailable now
+
 
 Via Git or Download
 -------------------
 
-If you want the latest version, you can clone our `GitHub repository <https://github.com/sustainable-computing/ODToolkit/>`_.
+If you want the latest version, you can clone our `GitHub repository <https://github.com/sustainable-computing/EnergyBoost.git>`_.
 
 1. Install Git on your computer::
 
     $ sudo apt-get install git
 
-2. Check and clone the latest version of ODToolkit::
+2. Check and clone the latest version of EnergyBoost::
 
-    $ git clone https://github.com/sustainable-computing/ODToolkit.git
+    $ git clone https://github.com/sustainable-computing/EnergyBoost.git
 
 3. Install requirements::
 
-    $ cd ./ODToolkit/
-    $ pip3 install -r requirements.txt
+    $ cd ./EnergyBoost/Scripts
+    $ ./installation.sh

@@ -101,6 +101,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Methods documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#mpc">MPC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rl">RL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#baseline">Baseline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dlc">DLC</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
@@ -174,12 +176,37 @@
 </div>
 <div class="section" id="mpc">
 <h2>MPC<a class="headerlink" href="#mpc" title="Permalink to this headline">¶</a></h2>
+<p>This part contains implementation of model predictive control.</p>
 <ul class="simple">
 <li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC2.py">The main code</a> for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py">Create hourly price</a> changes unix time to UTC time and generate a hourly price table</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py">Create TOU price table</a> creates a TOU price table for a year, so it can be used loaded as matrix in the solver.</li>
 </ul>
 </div>
 <div class="section" id="rl">
 <h2>RL<a class="headerlink" href="#rl" title="Permalink to this headline">¶</a></h2>
+<p>Implementation of Reinforcement Learning method</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/solar_a2c_nonlinear.py">A2C</a> Implementation of Actor Critic method which will genetrate the stratgy given states and reward.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/environment.py">Environment</a> Formulate the problem into MDP environment, contains features of reset initialize states, calulate reward of a given states, and simulate next states.</li>
+</ul>
+</div>
+<div class="section" id="baseline">
+<h2>Baseline<a class="headerlink" href="#baseline" title="Permalink to this headline">¶</a></h2>
+<p>Contains different rule based baselines for different scenarios.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nosolar.py">Get no solar</a> Get baseline strategy for no solar and no batery installed.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nostorage.py">Get no battery</a> Get baseline strategy for no battery installed and with solar installed.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_rbc.py">Get RBC</a> Get a baseline strategy based on rule based TOU price.</li>
+</ul>
+<p>These three implementations will call assocaited environments developed for these different scenarios.</p>
+</div>
+<div class="section" id="dlc">
+<h2>DLC<a class="headerlink" href="#dlc" title="Permalink to this headline">¶</a></h2>
+<p>Contains implementation of direct mapping method.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/DLC/mapping.py">Mapping</a> Mapping from avaiable features of each time slots to optimal actions solved by the solver and oracle data.</li>
+</ul>
 </div>
 </div>
 

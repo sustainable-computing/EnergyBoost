@@ -97,8 +97,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#downloading-odtoolkit">Downloading ODToolkit</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#via-pip">Via Pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#required-packages-and-versions">Required Packages and versions</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#via-git-or-download">Via Git or Download</a></li>
 </ul>
 </li>
@@ -176,34 +175,69 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">ODToolkit</span></code> is a Python package that offers open-source implementation of various occupancy detection models and allows
-for comprehensive evaluation of these models on publicly available datasets collected from residential and commercial
-buildings.</p>
+<p>EnergyBoost is python-based and you can easily install all required library through
+<cite>pip install</cite> or <cite>conda install</cite> for conda users.</p>
 <p>Pre-request: <a class="reference external" href="https://www.python.org/downloads/">Python 3.4+</a>.</p>
 </div>
-<div class="section" id="downloading-odtoolkit">
-<h2>Downloading ODToolkit<a class="headerlink" href="#downloading-odtoolkit" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="via-pip">
-<h3>Via Pip<a class="headerlink" href="#via-pip" title="Permalink to this headline">¶</a></h3>
-<p>Unavailable now</p>
-</div>
+<div class="section" id="required-packages-and-versions">
+<h2>Required Packages and versions<a class="headerlink" href="#required-packages-and-versions" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="58%" />
+<col width="42%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">A</th>
+<th class="head">B</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>pandas</td>
+<td>0.23.0</td>
+</tr>
+<tr class="row-odd"><td>numpy</td>
+<td>1.14.2</td>
+</tr>
+<tr class="row-even"><td>pvlib</td>
+<td>0.5.2</td>
+</tr>
+<tr class="row-odd"><td>matplotlib</td>
+<td>2.1.2</td>
+</tr>
+<tr class="row-even"><td>scikit-learn</td>
+<td>0.20.2</td>
+</tr>
+<tr class="row-odd"><td>tensorflow-gpu</td>
+<td>1.12.0</td>
+</tr>
+<tr class="row-even"><td>cxvpy</td>
+<td>1.0.6</td>
+</tr>
+<tr class="row-odd"><td>gurobipy</td>
+<td>8.1.0</td>
+</tr>
+<tr class="row-even"><td>gym</td>
+<td>0.10.5</td>
+</tr>
+</tbody>
+</table>
 <div class="section" id="via-git-or-download">
 <h3>Via Git or Download<a class="headerlink" href="#via-git-or-download" title="Permalink to this headline">¶</a></h3>
-<p>If you want the latest version, you can clone our <a class="reference external" href="https://github.com/sustainable-computing/ODToolkit/">GitHub repository</a>.</p>
+<p>If you want the latest version, you can clone our <a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost.git">GitHub repository</a>.</p>
 <ol class="arabic">
 <li><p class="first">Install Git on your computer:</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo apt-get install git
 </pre></div>
 </div>
 </li>
-<li><p class="first">Check and clone the latest version of ODToolkit:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone https://github.com/sustainable-computing/ODToolkit.git
+<li><p class="first">Check and clone the latest version of EnergyBoost:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ git clone https://github.com/sustainable-computing/EnergyBoost.git
 </pre></div>
 </div>
 </li>
 <li><p class="first">Install requirements:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd ./ODToolkit/
-$ pip3 install -r requirements.txt
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ cd ./EnergyBoost/Scripts
+$ ./installation.sh
 </pre></div>
 </div>
 </li>

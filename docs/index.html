@@ -98,7 +98,9 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocessor.html">Data prepossessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="methods.html">Methods documentation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html">Plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Some tools for running scripts</a></li>
 </ul>
 
             
@@ -165,25 +167,44 @@
             
   <div class="section" id="welcome-to-energyboost-s-documentation">
 <h1>Welcome to EnergyBoost’s documentation!<a class="headerlink" href="#welcome-to-energyboost-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>EnergyBoost employs accurate supervised learning models for predicting the next day available solar energy and household demand, and physical models that closely approximate the output of a solar inverter and the state of charge (SoC) of a lithium-ion battery. It formulates the control of battery charge and discharge operations as an optimal control problem over a finite time horizon.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#downloading-odtoolkit">Downloading ODToolkit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#required-packages-and-versions">Required Packages and versions</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="changelog.html#v1-0-0">v1.0.0</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="preprocessor.html">Data prepossessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="preprocessor.html">Data prepossessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html#raw-data-processing">Raw Data processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html#physical-model">Physical Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preprocessor.html#data-driven-model">Data Driven Model</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="methods.html">Methods documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="methods.html#mpc">MPC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="methods.html#rl">RL</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#baseline">Baseline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods.html#dlc">DLC</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html">Plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plot.html#bill">Bill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html#policy">Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="plot.html#violin">Violin</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="use.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Some tools for running scripts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html#run-local-batch">Run local batch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scripts.html#run-on-compute-canada-jobs">Run on Compute Canada jobs</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>

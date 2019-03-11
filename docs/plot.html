@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>plot &mdash; EnergyBoost 1.0.0 documentation</title>
+  <title>Plot &mdash; EnergyBoost 1.0.0 documentation</title>
   
 
   
@@ -98,7 +98,12 @@
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocessor.html">Data prepossessing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="methods.html">Methods documentation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">plot</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Plot</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#bill">Bill</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#policy">Policy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#violin">Violin</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -144,7 +149,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>plot</li>
+      <li>Plot</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -164,7 +169,30 @@
            <div itemprop="articleBody">
             
   <div class="section" id="plot">
-<h1>plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h1>
+<h1>Plot<a class="headerlink" href="#plot" title="Permalink to this headline">¶</a></h1>
+<p>Scripts for compile results and genrate plots:</p>
+<div class="section" id="bill">
+<h2>Bill<a class="headerlink" href="#bill" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/calculate_solver_bill_new.py">Get Feasible Actions</a> Results returned by the contoller using predicted data are sometimes not feasible, it will map the learned action to feasible actions and recalculate the bills and record the feasible actions.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/compile_bill_sce.py">Compile results of all homes</a> will compile results of all controllers of one given home or all homes and requried scenrios, will write results of the recalated bill in to a new table and create line plots of cumulative bills of a year.</li>
+</ul>
+</div>
+<div class="section" id="policy">
+<h2>Policy<a class="headerlink" href="#policy" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/PolicyViz.ipynb">Plot ground truth</a> will plot one week ground truth of one home including home load, solar output and optimal action.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/PolicyViz-controller.ipynb">Plot controller action</a> will plot learned policy of all controllers of one specific period of year.</li>
+</ul>
+</div>
+<div class="section" id="violin">
+<h2>Violin<a class="headerlink" href="#violin" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/bill_table2.py">Genrate ROI table</a> will read in bill results of all controllers and calulate needed information for ROI.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/mpc_par.ipynb">Calulate PAR of contoller</a> will calulate the average PAR of all homes of all days of a year.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Plot/violinplot_price4.py">Generate violin plots of bills of all controllers</a> will create violin plots of all contollers to show the distrubution of bills of all homes of a given scenario.</li>
+</ul>
+</div>
 </div>
 
 

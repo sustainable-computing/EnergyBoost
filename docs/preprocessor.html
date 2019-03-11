@@ -97,7 +97,12 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Data prepossessing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data prepossessing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#raw-data-processing">Raw Data processing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#physical-model">Physical Model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data-driven-model">Data Driven Model</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="methods.html">Methods documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
 </ul>
@@ -166,6 +171,32 @@
             
   <div class="section" id="data-prepossessing">
 <h1>Data prepossessing<a class="headerlink" href="#data-prepossessing" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><div class="toctree-wrapper compound">
+</div>
+</div></blockquote>
+<div class="section" id="raw-data-processing">
+<h2>Raw Data processing<a class="headerlink" href="#raw-data-processing" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/raw_data_processing.py">Raw data processing</a> merges home load data together with associated solar data and seprated them by home id. Output files are saved as <cite>data_by_home/processed_hhdata_&lt;home id&gt;.csv</cite></li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/fill_missing_data.py">Fill missing data</a> will fill any missing data for a year by filling the gap by last available value.</li>
+</ul>
+</div>
+<div class="section" id="physical-model">
+<h2>Physical Model<a class="headerlink" href="#physical-model" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/generatepower.py">Generate ac power</a> is a converter uses pvlib to calulate the ac power of solar output, it will add add one more new column to the data file including the power values.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/add_history.rb">Add history</a> will match data for each time slot with its history data of previous time slot and data one week before, these data can be used as features for prediction.</li>
+</ul>
+</div>
+<div class="section" id="data-driven-model">
+<h2>Data Driven Model<a class="headerlink" href="#data-driven-model" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model_fig.py">GHI model figure</a> and <a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model_fig-more.py">HL model figure</a> compare differnt models for predicting ac power and home load and generate a plot showing the nRMSE of different models.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/ghi_model.py">GHI model</a> and <a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/hl_model.py">HL model</a> train the best models for all homes predicting ac output and homeload. The trainted models are saved so that it can be used repeatly without training again.</li>
+<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/data_processing/get_predict_data.py">Get preidct data</a> call the saved models from last step and saved pridicted home load and ac output for each home. It merges the predcit two values with other features of states and save the output as <cite>predicted_data/predicted_hhdata_&lt;home id&gt;.csv</cite>.</li>
+</ul>
+</div>
 </div>
 
 
