@@ -1,7 +1,3 @@
-"""
-The main code for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem,
-several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering
-"""
 # !pip install -f https://download.mosek.com/stable/wheel/index.html Mosek
 #import mosek
 
@@ -26,89 +22,91 @@ from sklearn.externals import joblib
 """
 Global variables
 """
-solar_export_rate =  float(sys.argv[1])
-b_cap = float(sys.argv[2])
-max_rate = float(sys.argv[3])
-state=[]
-homeid= sys.argv[4].split(".")[0].split("_")[3]
-"""
-Load in saved model for prediction 
-"""
-clf_hl = joblib.load('saved_models/hl_rf_{}.pkl'.format(homeid))
-clf_ac = joblib.load('saved_models/ghi_rf_{}.pkl'.format(homeid))
-print("-homeid-------------------",homeid)
-
-
-# !pip install scsprox
-# !pip install ncvx
-# !pip install cylp
-# import cylp
-# import ncvx
-
-# %matplotlib inline
-
-MAX_TS = 24
-
-
-# optimizes the policy considering next week's data'
-start_point = 0
-end_point = 8616-24
-#end_point = 48
-#Date:      Jan 1st--------April 30 May 1st---------Oct31 Nov 1st-------Dec 31st
-#Time slot:   0----------- 2854     2855----------- 7233 7234----------8745
-
-"""
-price matrix
-"""
-price_weekday_winter = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
-price_weekday_summer = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.065, 0.065, 0.065, 0.065, 0.065])
-price_weekend = np.tile(np.array([0.065]), 24)
-
-# #winter time
-# if (start_point >= 0 and end_point <= 2854) or (start_point >= 7234 and end_point <= 8745):
-#     print("winter time")
-#     price_weekend = np.tile(np.array([0.065]), 24)
-#     price_weekday = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
-#     price_week = np.append(np.tile(price_weekday,5), np.tile(price_weekend, 2))
-#
-# if start_point >= 2855 and end_point <=7233:
-#     print("summer time")
-#     price_weekend = np.tile(np.array([0.065]), 24)
-#     price_weekday = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.065, 0.065, 0.065, 0.065, 0.065])
-#     price_week = np.append(np.tile(price_weekday,5), np.tile(price_weekend, 2))
+# solar_export_rate =  float(sys.argv[1])
+# b_cap = float(sys.argv[2])
+# max_rate = float(sys.argv[3])
+# state=[]
+# homeid= sys.argv[4].split(".")[0].split("_")[3]
+# """
+# Load in saved model for prediction
+# """
+# clf_hl = joblib.load('saved_models/hl_rf_{}.pkl'.format(homeid))
+# clf_ac = joblib.load('saved_models/ghi_rf_{}.pkl'.format(homeid))
+# print("-homeid-------------------",homeid)
 #
 #
-# # weekly price starting from Monday
-# P_grid = np.tile(price_week, numweeks)
-# #P_grid = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
-P_table = pd.read_csv('price_tou.csv')[168:8736]
-
-P_solar = solar_export_rate*np.ones(MAX_TS)
-#P_solar = -P_grid
-
-alpha_c = max_rate # in kW
-alpha_d = max_rate # in kW
-#b_cap = 6.4 # in kWh
-eta_c = 0.95
-eta_d = 0.95
-
-E_min = 0
-E_max = b_cap
-eta_c_leak = 0.0001*b_cap
-eta_p_leak = 0
-
-T_u = 1 # in hour
-#table = pd.read_csv(input_file)
-battery_init = 0.5*b_cap
-current_soc = battery_init
-total_reward= 0
+# # !pip install scsprox
+# # !pip install ncvx
+# # !pip install cylp
+# # import cylp
+# # import ncvx
+#
+# # %matplotlib inline
+#
+# MAX_TS = 24
+#
+#
+# # optimizes the policy considering next week's data'
+# start_point = 0
+# end_point = 8616-24
+# #end_point = 48
+# #Date:      Jan 1st--------April 30 May 1st---------Oct31 Nov 1st-------Dec 31st
+# #Time slot:   0----------- 2854     2855----------- 7233 7234----------8745
+#
+# """
+# price matrix
+# """
+# price_weekday_winter = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
+# price_weekday_summer = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.065, 0.065, 0.065, 0.065, 0.065])
+# price_weekend = np.tile(np.array([0.065]), 24)
+#
+# # #winter time
+# # if (start_point >= 0 and end_point <= 2854) or (start_point >= 7234 and end_point <= 8745):
+# #     print("winter time")
+# #     price_weekend = np.tile(np.array([0.065]), 24)
+# #     price_weekday = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
+# #     price_week = np.append(np.tile(price_weekday,5), np.tile(price_weekend, 2))
+# #
+# # if start_point >= 2855 and end_point <=7233:
+# #     print("summer time")
+# #     price_weekend = np.tile(np.array([0.065]), 24)
+# #     price_weekday = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.065, 0.065, 0.065, 0.065, 0.065])
+# #     price_week = np.append(np.tile(price_weekday,5), np.tile(price_weekend, 2))
+# #
+# #
+# # # weekly price starting from Monday
+# # P_grid = np.tile(price_week, numweeks)
+# # #P_grid = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
+# P_table = pd.read_csv('price_tou.csv')[168:8736]
+#
+# P_solar = solar_export_rate*np.ones(MAX_TS)
+# #P_solar = -P_grid
+#
+# alpha_c = max_rate # in kW
+# alpha_d = max_rate # in kW
+# #b_cap = 6.4 # in kWh
+# eta_c = 0.95
+# eta_d = 0.95
+#
+# E_min = 0
+# E_max = b_cap
+# eta_c_leak = 0.0001*b_cap
+# eta_p_leak = 0
+#
+# T_u = 1 # in hour
+# #table = pd.read_csv(input_file)
+# battery_init = 0.5*b_cap
+# current_soc = battery_init
+# total_reward= 0
 
 
 def cleanup(val):
     """
     Round up little number to 0
+
     :param val: learned policy
-    :return:
+
+    :return: None
     """
     if abs(val) < 1e-3:
         return 0
@@ -118,7 +116,9 @@ def cleanup(val):
 def init_ground_truth(datafile):
     """
     Initialise house hold data, solar data and price
+
     :param datafile: path input file
+
     :return:
     """
     print("init_ground_truth")

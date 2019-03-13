@@ -15,12 +15,12 @@ import os,sys
 import csv
 import matplotlib.pyplot as plt
 
-input_file = sys.argv[4]
-solar_export_rate =  float(sys.argv[1])
-b_cap = float(sys.argv[2])
-max_rate = float(sys.argv[3])
-homeid= sys.argv[4].split(".")[0].split("_")[3]
-print("-homeid-------------------",homeid)
+# input_file = sys.argv[4]
+# solar_export_rate =  float(sys.argv[1])
+# b_cap = float(sys.argv[2])
+# max_rate = float(sys.argv[3])
+# homeid= sys.argv[4].split(".")[0].split("_")[3]
+# print("-homeid-------------------",homeid)
 
 
 # !pip install scsprox
@@ -32,6 +32,11 @@ print("-homeid-------------------",homeid)
 # %matplotlib inline
 
 def cleanup(val):
+    """
+    Round up little number to 0
+    :param val: learned policy
+    :return:
+    """
     if abs(val) < 1e-3:
         return 0
     else:

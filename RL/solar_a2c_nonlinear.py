@@ -8,48 +8,48 @@ import tensorflow as tf
 import collections
 import csv
 import os
-from environment import EnergyEnvironment
-
-import matplotlib.pyplot as plt
-import sklearn.pipeline
-import sklearn.preprocessing
-
-if "../" not in sys.path:
-  sys.path.append("../")
-# from lib.envs.cliff_walking import CliffWalkingEnv
-from lib import plotting
-
-from sklearn.kernel_approximation import RBFSampler
-
-matplotlib.style.use('ggplot')
-
-#GLOBAL_VARIABLES
-MAX_CHARGE_RATE = float(sys.argv[3])
-ACTION_BOUND = [-MAX_CHARGE_RATE, MAX_CHARGE_RATE]
-#print("0187230981723897",ACTION_BOUND)
-current_bill = 0
-current_soc = float(sys.argv[2]) * 0.5
-
-# our environment
-env = EnergyEnvironment()
-
-# Feature Preprocessing: Normalize to zero mean and unit variance
-# We use a few samples from the observation space to do this
-observation_examples = pd.read_csv(sys.argv[4])[0:8640][['use','ac','hour','month','is_weekday']]
-#observation_examples = np.array([env.state[5]])
-observation_examples = observation_examples.values
-scaler = sklearn.preprocessing.StandardScaler()
-scaler.fit(observation_examples)
-
-# Used to converte a state to a featurizes represenation.
-# We use RBF kernels with different variances to cover different parts of the space
-featurizer = sklearn.pipeline.FeatureUnion([
-        ("rbf1", RBFSampler(gamma=5.0, n_components=200)),
-        ("rbf2", RBFSampler(gamma=2.0, n_components=200)),
-        ("rbf3", RBFSampler(gamma=1.0, n_components=200)),
-        ("rbf4", RBFSampler(gamma=0.5, n_components=200))
-        ])
-featurizer.fit(scaler.transform(observation_examples))
+# from environment import EnergyEnvironment
+#
+# import matplotlib.pyplot as plt
+# import sklearn.pipeline
+# import sklearn.preprocessing
+#
+# if "../" not in sys.path:
+#   sys.path.append("../")
+# # from lib.envs.cliff_walking import CliffWalkingEnv
+# from lib import plotting
+#
+# from sklearn.kernel_approximation import RBFSampler
+#
+# matplotlib.style.use('ggplot')
+#
+# #GLOBAL_VARIABLES
+# MAX_CHARGE_RATE = float(sys.argv[3])
+# ACTION_BOUND = [-MAX_CHARGE_RATE, MAX_CHARGE_RATE]
+# #print("0187230981723897",ACTION_BOUND)
+# current_bill = 0
+# current_soc = float(sys.argv[2]) * 0.5
+#
+# # our environment
+# env = EnergyEnvironment()
+#
+# # Feature Preprocessing: Normalize to zero mean and unit variance
+# # We use a few samples from the observation space to do this
+# observation_examples = pd.read_csv(sys.argv[4])[0:8640][['use','ac','hour','month','is_weekday']]
+# #observation_examples = np.array([env.state[5]])
+# observation_examples = observation_examples.values
+# scaler = sklearn.preprocessing.StandardScaler()
+# scaler.fit(observation_examples)
+#
+# # Used to converte a state to a featurizes represenation.
+# # We use RBF kernels with different variances to cover different parts of the space
+# featurizer = sklearn.pipeline.FeatureUnion([
+#         ("rbf1", RBFSampler(gamma=5.0, n_components=200)),
+#         ("rbf2", RBFSampler(gamma=2.0, n_components=200)),
+#         ("rbf3", RBFSampler(gamma=1.0, n_components=200)),
+#         ("rbf4", RBFSampler(gamma=0.5, n_components=200))
+#         ])
+# featurizer.fit(scaler.transform(observation_examples))
 
 
 def featurize_state(state):
@@ -337,47 +337,48 @@ def actor_critic(env, month_var, battery_var, estimator_policy, estimator_value,
 
     return stats
 
+if __name__ == '__main__':
 
-tf.reset_default_graph()
+    tf.reset_default_graph()
 
-global_step = tf.Variable(0, name="global_step", trainable=False)
-policy_estimator = PolicyEstimator(learning_rate=0.001)
-value_estimator = ValueEstimator(learning_rate=0.1)
-#MAX_EP_STEPS = 24*7*4*3 #season
-#MAX_EP_STEPS = 24*7 #week
-MAX_EP_STEPS = 24 #Day
-#MAX_EP_STEPS = 1 #Hour
-env.sell_back = float(sys.argv[1])
-env.maximum_battery = float(sys.argv[2])
-env.battery_starter = env.maximum_battery * 0.5
-env.charge_mode = "TOU"
-env.datafile = sys.argv[4]
-homeid= sys.argv[4].split(".")[0].split("_")[3]
-print("Sell back price is",env.sell_back)
-print("battery size is",env.maximum_battery)
-env.init_ground_truth()
-#env.init_price()
-#print out the initial state
-#print("inistial state",env.state)
-directory="{}_2_test".format(homeid)
-if not os.path.exists(directory):
-    os.makedirs(directory)
-csvfile = open("{}_2_test/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
-writer = csv.writer(csvfile, delimiter=',')
-writer.writerow(["Hour", "Best_Action", "Best_Bill"])
-start_point = 72+24*3
-end_point = 72+24*4
+    global_step = tf.Variable(0, name="global_step", trainable=False)
+    policy_estimator = PolicyEstimator(learning_rate=0.001)
+    value_estimator = ValueEstimator(learning_rate=0.1)
+    #MAX_EP_STEPS = 24*7*4*3 #season
+    #MAX_EP_STEPS = 24*7 #week
+    MAX_EP_STEPS = 24 #Day
+    #MAX_EP_STEPS = 1 #Hour
+    env.sell_back = float(sys.argv[1])
+    env.maximum_battery = float(sys.argv[2])
+    env.battery_starter = env.maximum_battery * 0.5
+    env.charge_mode = "TOU"
+    env.datafile = sys.argv[4]
+    homeid= sys.argv[4].split(".")[0].split("_")[3]
+    print("Sell back price is",env.sell_back)
+    print("battery size is",env.maximum_battery)
+    env.init_ground_truth()
+    #env.init_price()
+    #print out the initial state
+    #print("inistial state",env.state)
+    directory="{}_2_test".format(homeid)
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    csvfile = open("{}_2_test/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
+    writer = csv.writer(csvfile, delimiter=',')
+    writer.writerow(["Hour", "Best_Action", "Best_Bill"])
+    start_point = 72+24*3
+    end_point = 72+24*4
 
-with tf.Session() as sess:
-    #sess.run(tf.initialize_all_variables())
-    # Note, due to randomness in the policy the number of episodes you need varies
-    # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
-    for i in range (start_point,end_point,MAX_EP_STEPS):
-        sess.run(tf.initialize_all_variables())
-        stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 500, discount_factor=1)
+    with tf.Session() as sess:
+        #sess.run(tf.initialize_all_variables())
+        # Note, due to randomness in the policy the number of episodes you need varies
+        # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
+        for i in range (start_point,end_point,MAX_EP_STEPS):
+            sess.run(tf.initialize_all_variables())
+            stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 500, discount_factor=1)
 
-print("this is best bill",current_bill)
-sell_back_round=int(float(sys.argv[1])*100)
-battery_round=int(float(sys.argv[2])*10)
-# plot the stat results
-plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,smoothing_window=10)
+    print("this is best bill",current_bill)
+    sell_back_round=int(float(sys.argv[1])*100)
+    battery_round=int(float(sys.argv[2])*10)
+    # plot the stat results
+    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,smoothing_window=10)

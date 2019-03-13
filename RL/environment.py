@@ -48,6 +48,14 @@ class EnergyEnvironment:
         self.charge_mode = charge_mode
 
     def init_price(self):
+        """
+        Initial the price table, read input file
+
+        Read row by row and save as an array
+
+
+        :return:
+        """
         print("initial the price")
 
         if not os.path.exists('bill/power_price.csv'):
