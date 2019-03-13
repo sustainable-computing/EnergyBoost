@@ -1,5 +1,6 @@
 """
-The main code for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering
+The main code for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem,
+several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering
 """
 # !pip install -f https://download.mosek.com/stable/wheel/index.html Mosek
 #import mosek
@@ -22,11 +23,17 @@ import matplotlib.pyplot as plt
 from sklearn.externals import joblib
 
 #input_file = sys.argv[4]
+"""
+Global variables
+"""
 solar_export_rate =  float(sys.argv[1])
 b_cap = float(sys.argv[2])
 max_rate = float(sys.argv[3])
 state=[]
 homeid= sys.argv[4].split(".")[0].split("_")[3]
+"""
+Load in saved model for prediction 
+"""
 clf_hl = joblib.load('saved_models/hl_rf_{}.pkl'.format(homeid))
 clf_ac = joblib.load('saved_models/ghi_rf_{}.pkl'.format(homeid))
 print("-homeid-------------------",homeid)
@@ -50,7 +57,9 @@ end_point = 8616-24
 #Date:      Jan 1st--------April 30 May 1st---------Oct31 Nov 1st-------Dec 31st
 #Time slot:   0----------- 2854     2855----------- 7233 7234----------8745
 
-
+"""
+price matrix
+"""
 price_weekday_winter = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
 price_weekday_summer = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.065, 0.065, 0.065, 0.065, 0.065])
 price_weekend = np.tile(np.array([0.065]), 24)
@@ -96,12 +105,22 @@ total_reward= 0
 
 
 def cleanup(val):
+    """
+    Round up little number to 0
+    :param val: learned policy
+    :return:
+    """
     if abs(val) < 1e-3:
         return 0
     else:
         return val
 
 def init_ground_truth(datafile):
+    """
+    Initialise house hold data, solar data and price
+    :param datafile: path input file
+    :return:
+    """
     print("init_ground_truth")
 
 
@@ -134,6 +153,11 @@ def init_ground_truth(datafile):
     print("\rEnvironment setup finished. Total %i lines data." % row_count)
 
 def predict_day(start):
+    '''
+    load new observations,predict home use and solar generate of the next time slot
+    :param start: index of hour of a year
+    :return:
+    '''
     day_state=copy.deepcopy(state[start:start+24])
     use_list = np.array([])
     ac_list = np.array([])
@@ -158,6 +182,13 @@ def predict_day(start):
 
 
 def compute(hour_var,battery_var,last):
+    """
+    Get the best policy of next dat
+    :param hour_var: index of hour of a year
+    :param battery_var: current battery SoC
+    :param last: binary value, if it is the last episode
+    :return:
+    """
     global current_soc
     global total_reward
     A = np.zeros(MAX_TS)
