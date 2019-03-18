@@ -46,11 +46,13 @@ def get_fractional_degradation(bt):
     DoD = 100 * bt /B
 
     # Functions
-    CL1 = (e * np.exp (f * Id) + g * np.exp(h * Id))/ (e * np.exp (f * NomId) + g * np.exp(h * NomId))
-    CL2 = (m * np.exp (n * Ich) + o * np.exp(p * Ich))/ (m* np.exp (n* NomIch) + o * np.exp(p * NomIch))
-    CL3 = get_CL4(DoD, Soc)/get_CL4(NomDoD, NomSoC)
-    CL = (n * CL1) * (n * CL2) * (n * CL3)
-    Fractional_D = (0.5/3650)/ (n * CL)
+    nCL1 = (e * np.exp (f * Id) + g * np.exp(h * Id))/ (e * np.exp (f * NomId) + g * np.exp(h * NomId))
+    nCL2 = (m * np.exp (n * Ich) + o * np.exp(p * Ich))/ (m* np.exp (n* NomIch) + o * np.exp(p * NomIch))
+    nCL3 = get_CL4(DoD, Soc)/get_CL4(NomDoD, NomSoC)
+    nCL = CL1 * nCL2 * nCL3
+    Fractional_D = (0.5/3650)/ nCL
+
+return Fractional_D
 
 def get_CL4(DoD, SoC):
     q + ((u/(2*v)*(s + 100*u) - 200*t)*DoD + s * SoC + t * (DoD ** 2) + u * DoD * SoC + v * (SoC ** 2)
