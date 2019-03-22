@@ -1,4 +1,18 @@
 import numpy as np
+# parameter
+e = 4464
+f = -0.1382
+g = -1519
+h = -0.4305
+m = 5963
+n = -0.6531
+o = 321.4
+p = 0.03168
+q = 1471
+s = 214.3
+t = 0.6111
+u = 0.3369
+v = -2.295
 # funtion of get fractional degradation
 def get_fractional_degradation(bt):
     """
@@ -9,20 +23,6 @@ def get_fractional_degradation(bt):
     :return: None
     """
 
-    # parameter
-    e = 4464
-    f = -0.1382
-    g = -1519
-    h = -0.4305
-    m = 5963
-    n = -0.6531
-    o = 321.4
-    p = 0.03168
-    q = 1471
-    s = 214.3
-    t = 0.6111
-    u = 0.3369
-    v = -2.295
 
 
     NomIch = 0.125 # Nominal charge current
@@ -48,19 +48,21 @@ def get_fractional_degradation(bt):
     # Functions
     nCL1 = (e * np.exp (f * Id) + g * np.exp(h * Id))/ (e * np.exp (f * NomId) + g * np.exp(h * NomId))
     nCL2 = (m * np.exp (n * Ich) + o * np.exp(p * Ich))/ (m* np.exp (n* NomIch) + o * np.exp(p * NomIch))
-    nCL3 = get_CL4(DoD, Soc)/get_CL4(NomDoD, NomSoC)
-    nCL = CL1 * nCL2 * nCL3
+    nCL3 = get_CL4(DoD, SoC)/get_CL4(NomDoD, NomSoC)
+    nCL = nCL1 * nCL2 * nCL3
     Fractional_D = (0.5/3650)/ nCL
-
-return Fractional_D
+    return Fractional_D
 
 def get_CL4(DoD, SoC):
-    q + ((u/(2*v)*(s + 100*u) - 200*t)*DoD + s * SoC + t * (DoD ** 2) + u * DoD * SoC + v * (SoC ** 2)
+    CL4 = q + ((u/(2*v)*(s + 100*u) - 200*t)*DoD + s * SoC + t * (DoD ** 2) + u * DoD * SoC + v * (SoC ** 2))
+    return CL4
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     blife= 30 # battery life 30 years
     action = 0.2
     degradation = get_fractional_degradation(action)
-    update_blife = 30 * degradation
+    print("This is degradation: ",degradation)
+    update_blife = 30 * (1-degradation)
+    print("Updated life is: ",update_blife)
