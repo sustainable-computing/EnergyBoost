@@ -56,10 +56,12 @@ def pre_train(episodes):
 
             ACTION_BOUND = [-min(env.state[env.current_index][8], env.state[env.current_index][5], MAX_CHARGE_RATE), min((env.maximum_battery - env.state[env.current_index][8]), MAX_CHARGE_RATE)]
 
-            if s[3]>s[5]:
-                a = MAX_CHARGE_RATE
+            if s[6]>s[5]:
+                a = s[6]-s[5]
             elif s[8]>0:
                 a = (-1*MAX_CHARGE_RATE)
+            else:
+                a=0
 
             a=np.clip(a,*ACTION_BOUND)
 
