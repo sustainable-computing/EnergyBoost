@@ -1,12 +1,25 @@
 # EnergyBoost: Learning-based Control of Home Batteries
 
 ## Description
-EnergyBoost employs accurate supervised learning models 
+EnergyBoost is a software program that runs on a Raspberry Pi.
+It utilizes accurate supervised learning models 
 for predicting the next day available solar energy and household demand, and 
 physical models that closely approximate the output of a solar inverter
 and the state of charge (SoC) of a lithium-ion battery. 
 It formulates the control of battery charge and discharge operations 
 as an optimal control problem over a finite time horizon.
+This problem is solved using model-based and model-free control techniques. 
+
+EnergyBoost is licensed under [MIT](https://github.com/sustainable-computing/ODToolkit/blob/master/LICENSE). 
+Code is written by Baihong Qi.
+
+## Contributing
+We welcome contributions to EnergyBoost in many forms, such as bug reports, pull requests, etc. 
+
+## Citing our work
+```
+Baihong Qi, Mohammad Rashedi, Omid Ardakanian, "EnergyBoost: Learning-based Control of Home Batteries", In Proceedings of the Tenth ACM International Conference on Future Energy Systems (ACM e-Energy), June 2019
+```
 
 ## Prerequisites
 EnergyBoost is python-based and you can easily install all required library through
