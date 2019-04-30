@@ -1,3 +1,4 @@
 /.idea
 /sphinx/_build
 *.pyc
+*.DS_Store
