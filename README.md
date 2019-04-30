@@ -1,6 +1,6 @@
 # EnergyBoost: Learning-based Control of Home Batteries
 
-<img src="img/logo_RGB.png" alt="EnergyBoost logo" width=300px margin="auto" />
+<img src="logo_RGB.png" alt="EnergyBoost logo" width=300px margin="auto" />
 
 ## Description
 EnergyBoost is a software program that runs on a Raspberry Pi.
