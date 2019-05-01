@@ -18,6 +18,9 @@ Code is written by Baihong Qi.
 ## Contributing
 We welcome contributions to EnergyBoost in many forms, such as bug reports, pull requests, etc. 
 
+## Documentation
+Detailed documentation is available at https://sustainable-computing.github.io/EnergyBoost/
+
 ## Citing our work
 ```
 Baihong Qi, Mohammad Rashedi, Omid Ardakanian, "EnergyBoost: Learning-based Control of Home Batteries", In Proceedings of the Tenth ACM International Conference on Future Energy Systems (ACM e-Energy), June 2019
