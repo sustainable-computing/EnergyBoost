@@ -7,6 +7,7 @@ def create():
     convert to utc time with proper time zone
 
     :return: None
+
     """
     df = pd.read_csv('/home/baihong/Documents/data/price.csv')
     csvfile = open("bill/price.csv",'w', newline='')

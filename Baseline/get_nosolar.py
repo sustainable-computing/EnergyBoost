@@ -6,38 +6,45 @@ import os
 import csv
 import shutil
 import math
-from environment_nosolar import EnergyEnvironment
-
-MAX_EPISODES = 1
-MAX_EP_STEPS = 24 * 30
-LR_A = 1e-4  # learning rate for actor
-LR_C = 1e-4  # learning rate for critic
-GAMMA = 1.0  # reward discount
-REPLACE_ITER_A = 1100
-REPLACE_ITER_C = 1000
-MEMORY_CAPACITY = 168
-BATCH_SIZE = 5000
-VAR_MIN = 0.02
-LOAD = False
-TEMP = []
-actions_base = []
-bill_base = []
-grid_base = []
-soc_base = []
-current_soc=float(sys.argv[2])/2
-current_bill=0
-current_soc=0
-#policy = pd.read_csv('86_4/sb20b135.csv')['Best_Action']
-
-
-env = EnergyEnvironment()
-
-STATE_DIM = 10
-ACTION_DIM = 1
-MAX_CHARGE_RATE = float(sys.argv[3])
-ACTION_BOUND = [-MAX_CHARGE_RATE, MAX_CHARGE_RATE]
+# from environment_nosolar import EnergyEnvironment
+#
+# MAX_EPISODES = 1
+# MAX_EP_STEPS = 24 * 30
+# LR_A = 1e-4  # learning rate for actor
+# LR_C = 1e-4  # learning rate for critic
+# GAMMA = 1.0  # reward discount
+# REPLACE_ITER_A = 1100
+# REPLACE_ITER_C = 1000
+# MEMORY_CAPACITY = 168
+# BATCH_SIZE = 5000
+# VAR_MIN = 0.02
+# LOAD = False
+# TEMP = []
+# actions_base = []
+# bill_base = []
+# grid_base = []
+# soc_base = []
+# current_soc=float(sys.argv[2])/2
+# current_bill=0
+# current_soc=0
+# #policy = pd.read_csv('86_4/sb20b135.csv')['Best_Action']
+#
+#
+# env = EnergyEnvironment()
+#
+# STATE_DIM = 10
+# ACTION_DIM = 1
+# MAX_CHARGE_RATE = float(sys.argv[3])
+# ACTION_BOUND = [-MAX_CHARGE_RATE, MAX_CHARGE_RATE]
 
 def pre_train(episodes):
+    """
+    Get the baseline if there is no solar panel installed
+
+    :param episodes: Number of episodes to be run
+
+    :return: None
+    """
     global actions_base
     global bill_base
     global grid_base
@@ -81,6 +88,11 @@ def pre_train(episodes):
 
 
 def eval():
+    """
+    Evaluate the policy if it is already learned
+
+    :return: None
+    """
     s = env.reset()
     done = False
     ep_reward = 0

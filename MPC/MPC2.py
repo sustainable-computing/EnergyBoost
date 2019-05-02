@@ -119,7 +119,7 @@ def init_ground_truth(datafile):
 
     :param datafile: path input file
 
-    :return:
+    :return: None
     """
     print("init_ground_truth")
 
@@ -155,8 +155,11 @@ def init_ground_truth(datafile):
 def predict_day(start):
     '''
     load new observations,predict home use and solar generate of the next time slot
+
     :param start: index of hour of a year
-    :return:
+
+    :return: use_list: predicted home use of
+            next ac list: predicted ac output of next day
     '''
     day_state=copy.deepcopy(state[start:start+24])
     use_list = np.array([])
@@ -183,11 +186,15 @@ def predict_day(start):
 
 def compute(hour_var,battery_var,last):
     """
-    Get the best policy of next dat
+    Get the best policy of next day
+
     :param hour_var: index of hour of a year
+
     :param battery_var: current battery SoC
+
     :param last: binary value, if it is the last episode
-    :return:
+
+    :return: None
     """
     global current_soc
     global total_reward

@@ -1,5 +1,5 @@
 ***********************
-Methods documentation
+API documentation
 ***********************
 
 
@@ -61,11 +61,34 @@ Baseline
 ==============
 Contains different rule based baselines for different scenarios.
 
-* `Get no solar <https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nosolar.py>`_ Get baseline strategy for no solar and no batery installed.
+No solar panel
+--------------------
+`Get no solar <https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nosolar.py>`_ Get baseline strategy for no solar and no batery installed.
 
-* `Get no battery <https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nostorage.py>`_ Get baseline strategy for no battery installed and with solar installed.
+.. automodule:: Baseline.get_nosolar
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
-* `Get RBC <https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_rbc.py>`_ Get a baseline strategy based on rule based TOU price. 
+
+No battery
+-------------
+`Get no battery <https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nostorage.py>`_ Get baseline strategy for no battery installed and with solar installed.
+
+.. automodule:: Baseline.get_nostorage
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Rule based policy
+--------------------
+
+`Get RBC <https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_rbc.py>`_ Get a baseline strategy based on rule based TOU price.
+
+.. automodule:: Baseline.get_rbc
+    :members:
+    :undoc-members:
+    :show-inheritance:
 
 These three implementations will call assocaited environments developed for these different scenarios.
 
@@ -74,4 +97,16 @@ DLC
 ==========
 Contains implementation of direct mapping method.
 
-* `Mapping <https://github.com/sustainable-computing/EnergyBoost/blob/master/DLC/mapping.py>`_ Mapping from avaiable features of each time slots to optimal actions solved by the solver and oracle data. 
+Mapping
+--------------
+
+`Mapping <https://github.com/sustainable-computing/EnergyBoost/blob/master/DLC/mapping.py>`_ Mapping from avaiable features of each time slots to optimal actions solved by the solver and oracle data.
+
+
+Training neural network
+---------------------------
+
+.. automodule:: DLC.tune
+    :members:
+    :undoc-members:
+    :show-inheritance:

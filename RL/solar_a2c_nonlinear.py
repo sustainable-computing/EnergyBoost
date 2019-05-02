@@ -54,7 +54,11 @@ import os
 
 def featurize_state(state):
     """
-    Returns the featurized representation for a state.
+    RBF feature representation of a given state
+
+    :param state: current state
+
+    :return: state with new feature representation
     """
     scaled = scaler.transform([state])
     featurized = featurizer.transform(scaled)
@@ -103,11 +107,34 @@ class PolicyEstimator():
                 self.loss, global_step=tf.contrib.framework.get_global_step())
 
     def predict(self, state, sess=None):
+        """
+        predict the action given a state
+
+        :param state: current state
+
+        :param sess: tensorflow session
+
+        :return: Updated session
+        """
         sess = sess or tf.get_default_session()
         state = featurize_state(state)
         return sess.run(self.action, { self.state: state })
 
     def update(self, state, target, action, sess=None):
+        """
+        Update the policy function
+
+        :param state: current state
+
+        :param target: td target
+
+        :param action: learned action
+
+        :param sess: tensorflow session
+
+        :return: loss
+
+        """
         sess = sess or tf.get_default_session()
         state = featurize_state(state)
         feed_dict = { self.state: state, self.target: target, self.action: action  }
@@ -140,11 +167,34 @@ class ValueEstimator():
                 self.loss, global_step=tf.contrib.framework.get_global_step())
 
     def predict(self, state, sess=None):
+        """
+        predict the value given a state
+
+        :param state: current state
+
+        :param sess: tensorflow session
+
+        :return: Updated session
+        """
         sess = sess or tf.get_default_session()
         state = featurize_state(state)
         return sess.run(self.value_estimate, { self.state: state })
 
     def update(self, state, target, sess=None):
+        """
+        Update the policy function
+
+        :param state: current state
+
+        :param target: td target
+
+        :param action: learned action
+
+        :param sess: tensorflow session
+
+        :return: loss
+
+        """
         sess = sess or tf.get_default_session()
         state = featurize_state(state)
         feed_dict = { self.state: state, self.target: target }
@@ -155,18 +205,26 @@ class ValueEstimator():
 def actor_critic(env, month_var, battery_var, estimator_policy, estimator_value, num_episodes, discount_factor=1.0):
     """
     Actor Critic Algorithm. Optimizes the policy
+
     function approximator using policy gradient.
 
-    Args:
-        env: OpenAI environment.
-        estimator_policy: Policy Function to be optimized
-        estimator_value: Value function approximator, used as a critic
-        num_episodes: Number of episodes to run for
-        discount_factor: Time-discount factor
+    :param env: OpenAI environment.
 
-    Returns:
-        An EpisodeStats object with two numpy arrays for episode_lengths and episode_rewards.
+    :param month_var: index of month
+
+    :param battery_var: current battery SoC
+
+    :param estimator_policy: Policy Function to be optimized
+
+    :param estimator_value: Value function approximator, used as a critic
+
+    :param num_episodes: Number of episodes to run for
+
+    :param discount_factor: Time-discount factor
+
+    :return: An EpisodeStats object with two numpy arrays for episode_lengths and episode_rewards.
     """
+
     # #pretrain
     # ACTION_BOUND = [-MAX_CHARGE_RATE,MAX_CHARGE_RATE]
     # for i_episode in range(10):

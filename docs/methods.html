@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Methods documentation &mdash; EnergyBoost 1.0.0 documentation</title>
+  <title>API documentation &mdash; EnergyBoost 1.0.0 documentation</title>
   
 
   
@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="plot" href="plot.html" />
+    <link rel="next" title="Plot" href="plot.html" />
     <link rel="prev" title="Data prepossessing" href="preprocessor.html" /> 
 </head>
 
@@ -98,14 +98,34 @@
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="preprocessor.html">Data prepossessing</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Methods documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#mpc">MPC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#rl">RL</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#baseline">Baseline</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dlc">DLC</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#mpc">MPC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#main-code">Main code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-hourly-price">Create hourly price</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#create-tou-price">Create TOU price</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="plot.html">plot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rl">RL</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#a2c">A2C</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#environment">Environment</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#baseline">Baseline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#no-solar-panel">No solar panel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#no-battery">No battery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rule-based-policy">Rule based policy</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dlc">DLC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mapping">Mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-DLC.tune">Training neural network</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="plot.html">Plot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="use.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts.html">Some tools for running scripts</a></li>
 </ul>
 
             
@@ -151,7 +171,7 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Methods documentation</li>
+      <li>API documentation</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -170,43 +190,507 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="methods-documentation">
-<h1>Methods documentation<a class="headerlink" href="#methods-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="api-documentation">
+<h1>API documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 <div class="section" id="mpc">
 <h2>MPC<a class="headerlink" href="#mpc" title="Permalink to this headline">¶</a></h2>
 <p>This part contains implementation of model predictive control.</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC2.py">The main code</a> for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.</li>
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py">Create hourly price</a> changes unix time to UTC time and generate a hourly price table</li>
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py">Create TOU price table</a> creates a TOU price table for a year, so it can be used loaded as matrix in the solver.</li>
+<div class="section" id="main-code">
+<h3>Main code<a class="headerlink" href="#main-code" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/MPC2.py">The main code</a> for MPC uses cvxpy and Gurobi solver to solve the problem as a convex optimization problem, several versions of the MPC code are used for solve problem in different scenarios like hourly price and Net metering.</p>
+<span class="target" id="module-MPC.MPC2"></span><dl class="function">
+<dt id="MPC.MPC2.cleanup">
+<code class="descclassname">MPC.MPC2.</code><code class="descname">cleanup</code><span class="sig-paren">(</span><em>val</em><span class="sig-paren">)</span><a class="headerlink" href="#MPC.MPC2.cleanup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Round up little number to 0</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>val</strong> – learned policy</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="MPC.MPC2.compute">
+<code class="descclassname">MPC.MPC2.</code><code class="descname">compute</code><span class="sig-paren">(</span><em>hour_var</em>, <em>battery_var</em>, <em>last</em><span class="sig-paren">)</span><a class="headerlink" href="#MPC.MPC2.compute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the best policy of next day</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>hour_var</strong> – index of hour of a year</li>
+<li><strong>battery_var</strong> – current battery SoC</li>
+<li><strong>last</strong> – binary value, if it is the last episode</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">None</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="MPC.MPC2.init_ground_truth">
+<code class="descclassname">MPC.MPC2.</code><code class="descname">init_ground_truth</code><span class="sig-paren">(</span><em>datafile</em><span class="sig-paren">)</span><a class="headerlink" href="#MPC.MPC2.init_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise house hold data, solar data and price</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>datafile</strong> – path input file</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="MPC.MPC2.predict_day">
+<code class="descclassname">MPC.MPC2.</code><code class="descname">predict_day</code><span class="sig-paren">(</span><em>start</em><span class="sig-paren">)</span><a class="headerlink" href="#MPC.MPC2.predict_day" title="Permalink to this definition">¶</a></dt>
+<dd><p>load new observations,predict home use and solar generate of the next time slot</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>start</strong> – index of hour of a year</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">use_list: predicted home use of
+next ac list: predicted ac output of next day</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="create-hourly-price">
+<h3>Create hourly price<a class="headerlink" href="#create-hourly-price" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_hourly_price_table.py">Create hourly price</a> changes unix time to UTC time and generate a hourly price table</p>
+<span class="target" id="module-MPC.create_hourly_price_table"></span><dl class="function">
+<dt id="MPC.create_hourly_price_table.create">
+<code class="descclassname">MPC.create_hourly_price_table.</code><code class="descname">create</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#MPC.create_hourly_price_table.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>create hourly price table,
+read the the raw data with unix time
+convert to utc time with proper time zone</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="create-tou-price">
+<h3>Create TOU price<a class="headerlink" href="#create-tou-price" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/MPC/create_tou_price.py">Create TOU price table</a> creates a TOU price table for a year, so it can be used loaded as matrix in the solver.</p>
+</div>
 </div>
 <div class="section" id="rl">
 <h2>RL<a class="headerlink" href="#rl" title="Permalink to this headline">¶</a></h2>
 <p>Implementation of Reinforcement Learning method</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/solar_a2c_nonlinear.py">A2C</a> Implementation of Actor Critic method which will genetrate the stratgy given states and reward.</li>
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/environment.py">Environment</a> Formulate the problem into MDP environment, contains features of reset initialize states, calulate reward of a given states, and simulate next states.</li>
+<div class="section" id="a2c">
+<h3>A2C<a class="headerlink" href="#a2c" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/solar_a2c_nonlinear.py">A2C</a> Implementation of Actor Critic method which will genetrate the stratgy given states and reward.</p>
+<span class="target" id="module-RL.solar_a2c_nonlinear"></span><dl class="class">
+<dt id="RL.solar_a2c_nonlinear.PolicyEstimator">
+<em class="property">class </em><code class="descclassname">RL.solar_a2c_nonlinear.</code><code class="descname">PolicyEstimator</code><span class="sig-paren">(</span><em>learning_rate=0.01</em>, <em>scope='policy_estimator'</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.PolicyEstimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Policy Function approximator.</p>
+<dl class="method">
+<dt id="RL.solar_a2c_nonlinear.PolicyEstimator.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>state</em>, <em>sess=None</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.PolicyEstimator.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict the action given a state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>state</strong> – current state</li>
+<li><strong>sess</strong> – tensorflow session</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Updated session</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="RL.solar_a2c_nonlinear.PolicyEstimator.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>state</em>, <em>target</em>, <em>action</em>, <em>sess=None</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.PolicyEstimator.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the policy function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>state</strong> – current state</li>
+<li><strong>target</strong> – td target</li>
+<li><strong>action</strong> – learned action</li>
+<li><strong>sess</strong> – tensorflow session</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">loss</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="RL.solar_a2c_nonlinear.ValueEstimator">
+<em class="property">class </em><code class="descclassname">RL.solar_a2c_nonlinear.</code><code class="descname">ValueEstimator</code><span class="sig-paren">(</span><em>learning_rate=0.1</em>, <em>scope='value_estimator'</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.ValueEstimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Value Function approximator.</p>
+<dl class="method">
+<dt id="RL.solar_a2c_nonlinear.ValueEstimator.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>state</em>, <em>sess=None</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.ValueEstimator.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>predict the value given a state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>state</strong> – current state</li>
+<li><strong>sess</strong> – tensorflow session</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Updated session</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="RL.solar_a2c_nonlinear.ValueEstimator.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>state</em>, <em>target</em>, <em>sess=None</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.ValueEstimator.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the policy function</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>state</strong> – current state</li>
+<li><strong>target</strong> – td target</li>
+<li><strong>action</strong> – learned action</li>
+<li><strong>sess</strong> – tensorflow session</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">loss</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="RL.solar_a2c_nonlinear.actor_critic">
+<code class="descclassname">RL.solar_a2c_nonlinear.</code><code class="descname">actor_critic</code><span class="sig-paren">(</span><em>env</em>, <em>month_var</em>, <em>battery_var</em>, <em>estimator_policy</em>, <em>estimator_value</em>, <em>num_episodes</em>, <em>discount_factor=1.0</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.actor_critic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Actor Critic Algorithm. Optimizes the policy</p>
+<p>function approximator using policy gradient.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>env</strong> – OpenAI environment.</li>
+<li><strong>month_var</strong> – index of month</li>
+<li><strong>battery_var</strong> – current battery SoC</li>
+<li><strong>estimator_policy</strong> – Policy Function to be optimized</li>
+<li><strong>estimator_value</strong> – Value function approximator, used as a critic</li>
+<li><strong>num_episodes</strong> – Number of episodes to run for</li>
+<li><strong>discount_factor</strong> – Time-discount factor</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">An EpisodeStats object with two numpy arrays for episode_lengths and episode_rewards.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="RL.solar_a2c_nonlinear.featurize_state">
+<code class="descclassname">RL.solar_a2c_nonlinear.</code><code class="descname">featurize_state</code><span class="sig-paren">(</span><em>state</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.solar_a2c_nonlinear.featurize_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>RBF feature representation of a given state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>state</strong> – current state</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">state with new feature representation</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="environment">
+<h3>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/RL/environment.py">Environment</a> Formulate the problem into MDP environment, contains features of reset initialize states, calulate reward of a given states, and simulate next states.</p>
+<span class="target" id="module-RL.environment"></span><dl class="class">
+<dt id="RL.environment.EnergyEnvironment">
+<em class="property">class </em><code class="descclassname">RL.environment.</code><code class="descname">EnergyEnvironment</code><span class="sig-paren">(</span><em>mode='ground_truth'</em>, <em>charge_mode='TOU'</em>, <em>payment_cycle=24</em>, <em>datafile='test'</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.environment.EnergyEnvironment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="RL.environment.EnergyEnvironment.check_valid_action">
+<code class="descname">check_valid_action</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.environment.EnergyEnvironment.check_valid_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check if the current action is a valid action given the constraints</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> – action of the current time slot</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Binary value True or False</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="RL.environment.EnergyEnvironment.init_ground_truth">
+<code class="descname">init_ground_truth</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#RL.environment.EnergyEnvironment.init_ground_truth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the ground truth into states</p>
+<p>Read solar generation data, house load related data and them into a 2d array.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="RL.environment.EnergyEnvironment.init_price">
+<code class="descname">init_price</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#RL.environment.EnergyEnvironment.init_price" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial the price table, read input file</p>
+<p>Read row by row and save as an array</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="RL.environment.EnergyEnvironment.reset">
+<code class="descname">reset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#RL.environment.EnergyEnvironment.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise the state,</p>
+<p>Rest current state to the end of last episode</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="RL.environment.EnergyEnvironment.step">
+<code class="descname">step</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="headerlink" href="#RL.environment.EnergyEnvironment.step" title="Permalink to this definition">¶</a></dt>
+<dd><p>The main function of MDP environment, it read in a action,</p>
+<p>Calculate the reward of the this action, return the next state</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action</strong> – The action the current state</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Return total_need_grid:</th></tr>
+<tr class="field-even field"><td>&#160;</td><td class="field-body">total power take from the gird
+return_state: the next state
+Binary Value: If the episode terminate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 <div class="section" id="baseline">
 <h2>Baseline<a class="headerlink" href="#baseline" title="Permalink to this headline">¶</a></h2>
 <p>Contains different rule based baselines for different scenarios.</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nosolar.py">Get no solar</a> Get baseline strategy for no solar and no batery installed.</li>
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nostorage.py">Get no battery</a> Get baseline strategy for no battery installed and with solar installed.</li>
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_rbc.py">Get RBC</a> Get a baseline strategy based on rule based TOU price.</li>
-</ul>
+<div class="section" id="no-solar-panel">
+<h3>No solar panel<a class="headerlink" href="#no-solar-panel" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nosolar.py">Get no solar</a> Get baseline strategy for no solar and no batery installed.</p>
+<span class="target" id="module-Baseline.get_nosolar"></span><dl class="function">
+<dt id="Baseline.get_nosolar.eval">
+<code class="descclassname">Baseline.get_nosolar.</code><code class="descname">eval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Baseline.get_nosolar.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the policy if it is already learned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Baseline.get_nosolar.pre_train">
+<code class="descclassname">Baseline.get_nosolar.</code><code class="descname">pre_train</code><span class="sig-paren">(</span><em>episodes</em><span class="sig-paren">)</span><a class="headerlink" href="#Baseline.get_nosolar.pre_train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the baseline if there is no solar panel installed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>episodes</strong> – Number of episodes to be run</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="no-battery">
+<h3>No battery<a class="headerlink" href="#no-battery" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_nostorage.py">Get no battery</a> Get baseline strategy for no battery installed and with solar installed.</p>
+<span class="target" id="module-Baseline.get_nostorage"></span><dl class="function">
+<dt id="Baseline.get_nostorage.eval">
+<code class="descclassname">Baseline.get_nostorage.</code><code class="descname">eval</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Baseline.get_nostorage.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the policy if it is already learned</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Baseline.get_nostorage.pre_train">
+<code class="descclassname">Baseline.get_nostorage.</code><code class="descname">pre_train</code><span class="sig-paren">(</span><em>episodes</em><span class="sig-paren">)</span><a class="headerlink" href="#Baseline.get_nostorage.pre_train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Learn a policy if there is solar panel installed but no battery installed
+Sell solar power to the grid if there is reminder after home use</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>episodes</strong> – Number of episodes to be run</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="rule-based-policy">
+<h3>Rule based policy<a class="headerlink" href="#rule-based-policy" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/Baseline/get_rbc.py">Get RBC</a> Get a baseline strategy based on rule based TOU price.</p>
+<span class="target" id="module-Baseline.get_rbc"></span><dl class="function">
+<dt id="Baseline.get_rbc.pre_train">
+<code class="descclassname">Baseline.get_rbc.</code><code class="descname">pre_train</code><span class="sig-paren">(</span><em>episodes</em><span class="sig-paren">)</span><a class="headerlink" href="#Baseline.get_rbc.pre_train" title="Permalink to this definition">¶</a></dt>
+<dd><p>learn the rule based policy for a year
+charge at max rate when solar tariff is low
+discharge at max rate when solar tariff is high</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>episodes</strong> – Number of episodes to be run</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <p>These three implementations will call assocaited environments developed for these different scenarios.</p>
+</div>
 </div>
 <div class="section" id="dlc">
 <h2>DLC<a class="headerlink" href="#dlc" title="Permalink to this headline">¶</a></h2>
 <p>Contains implementation of direct mapping method.</p>
-<ul class="simple">
-<li><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/DLC/mapping.py">Mapping</a> Mapping from avaiable features of each time slots to optimal actions solved by the solver and oracle data.</li>
+<div class="section" id="mapping">
+<h3>Mapping<a class="headerlink" href="#mapping" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://github.com/sustainable-computing/EnergyBoost/blob/master/DLC/mapping.py">Mapping</a> Mapping from avaiable features of each time slots to optimal actions solved by the solver and oracle data.</p>
+</div>
+<div class="section" id="module-DLC.tune">
+<span id="training-neural-network"></span><h3>Training neural network<a class="headerlink" href="#module-DLC.tune" title="Permalink to this headline">¶</a></h3>
+<dl class="function">
+<dt id="DLC.tune.create_model">
+<code class="descclassname">DLC.tune.</code><code class="descname">create_model</code><span class="sig-paren">(</span><em>x_train</em>, <em>y_train</em>, <em>x_test</em>, <em>y_test</em><span class="sig-paren">)</span><a class="headerlink" href="#DLC.tune.create_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Model providing function:
+Create Keras model with double curly brackets dropped-in as needed.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>x_train</strong> – train set</li>
+<li><strong>y_train</strong> – train target</li>
+<li><strong>x_test</strong> – test set</li>
+<li><strong>y_test</strong> – test target</li>
 </ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Return value has to be a valid python dictionary with two customary keys:
+- loss: Specify a numeric evaluation metric to be minimized
+- status: Just use STATUS_OK and see hyperopt documentation if not feasible
+- The last one is optional, though recommended, namely:
+- model: specify the model just created so that we can later use it again.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="DLC.tune.data">
+<code class="descclassname">DLC.tune.</code><code class="descname">data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#DLC.tune.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data providing function:</p>
+<p>This function is separated from create_model() so that hyperopt
+won’t reload data for each evaluation run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 </div>
 </div>
 
@@ -218,7 +702,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="plot.html" class="btn btn-neutral float-right" title="plot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="plot.html" class="btn btn-neutral float-right" title="Plot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="preprocessor.html" class="btn btn-neutral float-left" title="Data prepossessing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

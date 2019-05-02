@@ -54,7 +54,7 @@ class EnergyEnvironment:
         Read row by row and save as an array
 
 
-        :return:
+        :return: None
         """
         print("initial the price")
 
@@ -77,6 +77,13 @@ class EnergyEnvironment:
         #print(self.hour_price)
 
     def init_ground_truth(self):
+        """
+        Initialize the ground truth into states
+
+        Read solar generation data, house load related data and them into a 2d array.
+
+        :return: None
+        """
 
 
         if not os.path.exists(self.datafile):
@@ -130,6 +137,19 @@ class EnergyEnvironment:
 
 
     def step(self, action):
+        """
+        The main function of MDP environment, it read in a action,
+
+        Calculate the reward of the this action, return the next state
+
+
+        :param action: The action the current state
+
+        :return total_need_grid: total power take from the gird
+                return_state: the next state
+                Binary Value: If the episode terminate
+
+        """
 
         self.current_index += 1
 
@@ -219,6 +239,14 @@ class EnergyEnvironment:
         return total_need_grid, return_state, np.float(reward), len(self.state) == self.current_index + 1
 
     def reset(self):
+        """
+        Initialise the state,
+
+        Rest current state to the end of last episode
+
+        :return: None
+
+        """
         #print("reset state current index is",self.current_index)
         self.current_index = self.month_starter
         #print("in this reset process, current index is",self.current_index)
@@ -233,6 +261,14 @@ class EnergyEnvironment:
         return np.hstack(return_state)
 
     def check_valid_action(self, action):
+        """
+        Check if the current action is a valid action given the constraints
+
+        :param action: action of the current time slot
+
+        :return:  Binary value True or False
+
+        """
         current_battery = self.state[self.current_index][8]
         if current_battery + action > self.maximum_battery or current_battery + action < 0:
             return False
