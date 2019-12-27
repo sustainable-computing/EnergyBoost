@@ -1,6 +1,6 @@
 import sys
 #sys.path.append("/home/zishan/Documents/")
-sys.path.append("/home/azishan/")
+sys.path.append("/home/azishan/EnergyBoost")
 
 
 # !pip install cvxpy
@@ -95,8 +95,8 @@ total_reward= 0
 
 
 def compute(hour_var,battery_var,last):
-    global current_soc
-    global total_reward
+    #global current_soc
+    #global total_reward
     A = np.zeros(MAX_TS)
     L = table['use'][hour_var:MAX_TS+hour_var].values
     L = L/2
@@ -186,10 +186,11 @@ def compute(hour_var,battery_var,last):
     for t in range(MAX_TS):
         #print(["Time slot", hour_var+t+1, "charge power is", cleanup(AC[t].value),"discharge power is", cleanup(AD[t].value)])
         A[t] = cleanup(AC[t].value) + cleanup(AD[t].value)
-        writer.writerow([hour_var+t+1,A[t],total_reward,total_reward+FG[t].value*P_grid[t]+TG[t].value*P_solar[t],FG[t].value,TG[t].value])
+        total_reward += FG[t].value*P_grid[t]+TG[t].value*P_solar[t]
+        writer.writerow([hour_var+t,A[t],total_reward])
         
-    total_reward = total_reward + objective.value
-    current_soc = E[MAX_TS-1].value
+    #total_reward = total_reward + objective.value
+    current_soc = E[MAX_TS].value
 
 
 if __name__ == '__main__':
@@ -198,13 +199,12 @@ if __name__ == '__main__':
         os.makedirs(directory)
     csvfile = open(directory+"/sb".format(homeid)+str(abs(int(float(sys.argv[1])*100)))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
-    writer.writerow(["Hour", "Best_Action","total_reward","Best_Bill","FG","TG"])# FG stands for
+    writer.writerow(["Hour", "Best_Action","Best_Bill"])# FG stands for
+    day_count = 1
     for i in range (start_point,end_point,MAX_TS):
-        #print("this is index",i)
-        if i==end_point-MAX_TS:
-            compute(i,current_soc,1)
-        else:
-            compute(i,current_soc,0)
+        compute(i,current_soc,0)
+        print(day_count)
+        day_count += 1
     print("total reward is", total_reward)
     csvfile.close()
     #writer.writerow(["total_reward",total_reward])

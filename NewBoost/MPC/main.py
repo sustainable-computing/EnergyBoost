@@ -1,7 +1,7 @@
 # !pip install -f https://download.mosek.com/stable/wheel/index.html Mosek
 import sys
 #sys.path.append("/home/zishan/Documents/")
-sys.path.append("/home/azishan/")
+sys.path.append("/home/azishan/EnergyBoost")
 
 # !pip install cvxopt
 #import cvxopt
@@ -90,7 +90,7 @@ T_u = 1 # in hour
 #table = pd.read_csv(input_file)
 battery_init = 0.5*b_cap
 current_soc = battery_init
-total_reward= 0
+total_reward = 0
 
 
 def cleanup(val):
@@ -156,8 +156,8 @@ def predict_day(start):
 
 
 def compute(hour_var,battery_var,last):
-    global current_soc
-    global total_reward
+    #global current_soc
+    #global total_reward
     A = np.zeros(MAX_TS)
     L,G = predict_day(hour_var)
     #print("This is L",L)
@@ -217,8 +217,8 @@ def compute(hour_var,battery_var,last):
 
     constraints = []
     constraints += [E[0] == E_init]
-    if last:
-        constraints += [E[MAX_TS] == battery_init]
+    #if last:
+    #    constraints += [E[MAX_TS] == battery_init]
     for t in range(MAX_TS):
         constraints += [AD[t] >= -alpha_d*SELECT[t]]
         constraints += [AC[t] <= alpha_c*(1-SELECT[t])]
@@ -247,32 +247,35 @@ def compute(hour_var,battery_var,last):
     #result = prob.solve(solver=cvx.GUROBI, verbose=True, MIPGap=1e-4)
     #result = prob.solve(solver=cvx.ECOS_BB, verbose=True)
 
-    print("Bill of first day is",sum([FG[t]*P_grid[t]+TG[t]*P_solar[t] for t in range(24)]).value)
-    print([FG[t].value*P_grid[t]+TG[t].value*P_solar[t] for t in range(24)])
-    first_hour_reward = FG[0].value*P_grid[0]+TG[0].value*P_solar[0]
+    #print("Bill of first day is",sum([FG[t]*P_grid[t]+TG[t]*P_solar[t] for t in range(24)]).value)
+    #print([FG[t].value*P_grid[t]+TG[t].value*P_solar[t] for t in range(24)])
+    #first_hour_reward = FG[0].value*P_grid[0]+TG[0].value*P_solar[0]
 
 
-    A[0] = cleanup(AC[0].value) + cleanup(AD[0].value)
-    writer.writerow([hour_var+1,A[0],total_reward,total_reward+FG[0].value*P_grid[0]+TG[0].value*P_solar[0],FG[0].value])
+    #A[0] = cleanup(AC[0].value) + cleanup(AD[0].value)
+    for t in range(MAX_TS):
+        total_reward += FG[t].value*P_grid[t]+TG[t].value*P_solar[t]
+        A[t] = cleanup(AC[t].value) + cleanup(AD[t].value)
+        writer.writerow([hour_var+t,A[t],total_reward])
     
-    total_reward = total_reward + first_hour_reward
-    current_soc = E[1].value
+    #total_reward = total_reward + first_hour_reward
+    current_soc = E[MAX_TS].value
 
 
 if __name__ == '__main__':
     init_ground_truth(sys.argv[4])
+    
     directory="result_{}".format(homeid)
     if not os.path.exists(directory):
         os.makedirs(directory)
     csvfile = open(directory+"/sb".format(homeid)+str(abs(int(float(sys.argv[1])*100)))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
-    writer.writerow(["Hour", "Best_Action","total_reward","Best_Bill","FG"])
-    for i in range (start_point,end_point):
-        #print("this is index",i)
-        if i==end_point-1:
-            compute(i,current_soc,1)
-        else:
-            compute(i,current_soc,0)
+    writer.writerow(["Hour", "Best_Action","Best_Bill"])
+    day_count = 1
+    for i in range (start_point,end_point,MAX_TS):
+        compute(i,current_soc,0)
+        print(day_count)
+        day_count += 1
     print("total reward is", total_reward)
     csvfile.close()
     #writer.writerow(["total_reward",total_reward])

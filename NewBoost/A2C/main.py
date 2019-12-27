@@ -405,7 +405,7 @@ if __name__ == '__main__':
     writer.writerow(["Hour", "Best_Action", "Best_Bill"])
     start_point = int(sys.argv[5])
     end_point = int(sys.argv[6])
-
+    day_count = 1
     with tf.Session() as sess:
         #sess.run(tf.initialize_all_variables())
         # Note, due to randomness in the policy the number of episodes you need varies
@@ -413,9 +413,11 @@ if __name__ == '__main__':
         for i in range (start_point,end_point,MAX_EP_STEPS):
             sess.run(tf.initialize_all_variables())
             stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 500, discount_factor=1)
+            print(day_count)
+            day_count += 1
 
     print("this is best bill",current_bill)
     sell_back_round=int(float(sys.argv[1])*100)
     battery_round=int(float(sys.argv[2])*10)
     # plot the stat results
-    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+"A2C", smoothing_window=10)
+    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/A2C_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round), smoothing_window=10)

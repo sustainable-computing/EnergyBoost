@@ -260,8 +260,8 @@ if __name__ == '__main__':
     directory="result_{}".format(homeid)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    #csvfile = open(directory+"/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
-    csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
+    csvfile = open(directory+"/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
+    #csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
     writer.writerow(["Hour", "Best_Action", "Best_Bill"])
     start_point = int(sys.argv[5])
@@ -282,13 +282,16 @@ if __name__ == '__main__':
     
     #args = utils.Args()
     #agent = Agent(state_dim=state_dim, action_dim=1, max_action=MAX_CHARGE_RATE*1.05)
+    day_count = 1
     for i in range (start_point,end_point,MAX_EP_STEPS):
         #sess.run(tf.initialize_all_variables())
         agent = Agent(state_dim=state_dim, action_dim=1, max_action=MAX_CHARGE_RATE)
         stats = run(env, i, current_soc, agent, 500, discount_factor=1)
+        print(day_count)
+        day_count += 1
 
     print("This is the best bill",current_bill)
     sell_back_round=int(float(sys.argv[1])*100)
     battery_round=int(float(sys.argv[2])*10)
     # plot the stat results
-    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/DDPG',smoothing_window=10)
+    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/DDPG_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round),smoothing_window=10)

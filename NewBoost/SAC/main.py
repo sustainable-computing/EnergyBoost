@@ -278,14 +278,16 @@ if __name__ == '__main__':
     #sys.exit()
     
     args = utils.Args()
+    day_count = 1
     #agent = Agent(state_dim=state_dim, action_dim=1, max_action=MAX_CHARGE_RATE*1.05)
     for i in range (start_point,end_point,MAX_EP_STEPS):
         #sess.run(tf.initialize_all_variables())
         agent = Agent(state_dim, env.action_space, args)
         stats = run(env, i, current_soc, agent, 500, discount_factor=1)
-
+        print(day_count)
+        day_count += 1
     print("This is the best bill",current_bill)
     sell_back_round=int(float(sys.argv[1])*100)
     battery_round=int(float(sys.argv[2])*10)
     # plot the stat results
-    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/SAC',smoothing_window=10)
+    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/SAC_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round),smoothing_window=10)
