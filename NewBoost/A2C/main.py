@@ -1,6 +1,6 @@
 import sys
 #sys.path.append("/home/zishan/Documents/")
-sys.path.append("/home/azishan/")
+sys.path.append("/home/azishan/EnergyBoost/")
  
 #import gym
 import itertools
