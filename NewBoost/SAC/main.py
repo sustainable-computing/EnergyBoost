@@ -1,5 +1,5 @@
 import sys
-#sys.path.append("/home/zishan/Documents/")
+#sys.path.append("/home/zishan/Documents/EnergyBoost")
 sys.path.append("/home/azishan/EnergyBoost/")
 
 
@@ -255,12 +255,14 @@ if __name__ == '__main__':
     directory="result_{}".format(homeid)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    #csvfile = open(directory+"/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
-    csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
+    csvfile = open(directory+"/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
+    #csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
     writer.writerow(["Hour", "Best_Action", "Best_Bill"])
-    start_point = int(sys.argv[5])
-    end_point = int(sys.argv[6])
+    #start_point = int(sys.argv[5])
+    #end_point = int(sys.argv[6])
+    start_point = 0
+    end_point = 8616
 
     
     #print('Testing')
