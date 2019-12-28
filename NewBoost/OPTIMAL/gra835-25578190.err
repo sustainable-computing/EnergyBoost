@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/bin/virtualenv", line 11, in <module>
+    load_entry_point('virtualenv==15.1.0', 'console_scripts', 'virtualenv')()
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 713, in main
+    symlink=options.symlink)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 925, in create_environment
+    site_packages=site_packages, clear=clear, symlink=symlink))
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 1368, in install_python
+    os.unlink(full_pth)
+FileNotFoundError: [Errno 2] No such file or directory: '/home/azishan/ENV/bin/python3'

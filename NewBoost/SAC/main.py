@@ -283,7 +283,7 @@ if __name__ == '__main__':
     for i in range (start_point,end_point,MAX_EP_STEPS):
         #sess.run(tf.initialize_all_variables())
         agent = Agent(state_dim, env.action_space, args)
-        stats = run(env, i, current_soc, agent, 500, discount_factor=1)
+        stats = run(env, i, current_soc, agent, 50, discount_factor=1)
         print(day_count)
         day_count += 1
     print("This is the best bill",current_bill)

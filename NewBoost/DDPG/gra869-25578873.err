@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/bin/virtualenv", line 11, in <module>
+    load_entry_point('virtualenv==15.1.0', 'console_scripts', 'virtualenv')()
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 713, in main
+    symlink=options.symlink)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 925, in create_environment
+    site_packages=site_packages, clear=clear, symlink=symlink))
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 1231, in install_python
+    shutil.copyfile(executable, py_executable)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/shutil.py", line 121, in copyfile
+    with open(dst, 'wb') as fdst:
+OSError: [Errno 26] Text file busy: '/home/azishan/ENV/bin/python'
+import: unable to open X server `localhost:15.0' @ error/import.c/ImportImageCommand/358.
+import: unable to open X server `localhost:15.0' @ error/import.c/ImportImageCommand/358.
+/home/azishan/ENV/bin/pip: line 7: from: command not found
+/home/azishan/ENV/bin/pip: line 10: syntax error near unexpected token `('
+/home/azishan/ENV/bin/pip: line 10: `    sys.argv[0] = re.sub(r'(-script\.pyw?|\.exe)?$', '', sys.argv[0])'
+Ignoring pip: markers 'python_version < "3"' don't match your environment
+/home/azishan/ENV/lib/python3.6/site-packages/sklearn/externals/joblib/__init__.py:15: DeprecationWarning: sklearn.externals.joblib is deprecated in 0.21 and will be removed in 0.23. Please import this functionality directly from joblib, which can be installed with: pip install joblib. If this warning is raised when loading pickled models, you may need to re-serialize those models with scikit-learn 0.21+.
+  warnings.warn(msg, category=DeprecationWarning)

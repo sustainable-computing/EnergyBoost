@@ -156,8 +156,8 @@ def predict_day(start):
 
 
 def compute(hour_var,battery_var,last):
-    #global current_soc
-    #global total_reward
+    global current_soc
+    global total_reward
     A = np.zeros(MAX_TS)
     L,G = predict_day(hour_var)
     #print("This is L",L)

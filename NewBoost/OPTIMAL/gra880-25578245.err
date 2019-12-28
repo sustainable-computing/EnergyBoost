@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/bin/virtualenv", line 11, in <module>
+    load_entry_point('virtualenv==15.1.0', 'console_scripts', 'virtualenv')()
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 713, in main
+    symlink=options.symlink)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 925, in create_environment
+    site_packages=site_packages, clear=clear, symlink=symlink))
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 1387, in install_python
+    raise e
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/site-packages/virtualenv-15.1.0-py3.6.egg/virtualenv.py", line 1379, in install_python
+    stdout=subprocess.PIPE)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/subprocess.py", line 709, in __init__
+    restore_signals, start_new_session)
+  File "/cvmfs/soft.computecanada.ca/easybuild/software/2017/Core/python/3.6.3/lib/python3.6/subprocess.py", line 1344, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+OSError: [Errno 26] Text file busy: '/home/azishan/ENV/bin/python'

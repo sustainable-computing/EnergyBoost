@@ -399,12 +399,15 @@ if __name__ == '__main__':
     directory="result_{}".format(homeid)
     if not os.path.exists(directory):
         os.makedirs(directory)
-    #csvfile = open(directory+"/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
-    csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
+    csvfile = open(directory+"/sb".format(homeid)+str(int(float(sys.argv[1])*100))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
+    #csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
     writer.writerow(["Hour", "Best_Action", "Best_Bill"])
-    start_point = int(sys.argv[5])
-    end_point = int(sys.argv[6])
+    #start_point = int(sys.argv[5])
+    #end_point = int(sys.argv[6])
+    start_point = 0
+    end_point = 8616
+
     day_count = 1
     with tf.Session() as sess:
         #sess.run(tf.initialize_all_variables())
@@ -412,7 +415,7 @@ if __name__ == '__main__':
         # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
         for i in range (start_point,end_point,MAX_EP_STEPS):
             sess.run(tf.initialize_all_variables())
-            stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 500, discount_factor=1)
+            stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 50, discount_factor=1)
             print(day_count)
             day_count += 1
 

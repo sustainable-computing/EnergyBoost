@@ -95,8 +95,8 @@ total_reward= 0
 
 
 def compute(hour_var,battery_var,last):
-    #global current_soc
-    #global total_reward
+    global current_soc
+    global total_reward
     A = np.zeros(MAX_TS)
     L = table['use'][hour_var:MAX_TS+hour_var].values
     L = L/2
@@ -180,8 +180,8 @@ def compute(hour_var,battery_var,last):
     #result = prob.solve(solver=cvx.GUROBI, verbose=True, MIPGap=1e-4)
     # result = prob.solve(solver=cvx.ECOS_BB, verbose=True)
 
-    print("Bill of first day is",sum([FG[t]*P_grid[t]+TG[t]*P_solar[t] for t in range(24)]).value)
-    print([FG[t].value*P_grid[t]+TG[t].value*P_solar[t] for t in range(24)])
+    #print("Bill of first day is",sum([FG[t]*P_grid[t]+TG[t]*P_solar[t] for t in range(24)]).value)
+    #print([FG[t].value*P_grid[t]+TG[t].value*P_solar[t] for t in range(24)])
 
     for t in range(MAX_TS):
         #print(["Time slot", hour_var+t+1, "charge power is", cleanup(AC[t].value),"discharge power is", cleanup(AD[t].value)])

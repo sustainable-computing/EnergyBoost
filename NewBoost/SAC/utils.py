@@ -66,4 +66,4 @@ class Args:
         self.start_steps = 10000
         self.target_update_interval = 1
         self.replay_size = 1000000
-        self.cuda = True
+        self.cuda = False

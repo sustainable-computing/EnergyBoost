@@ -264,8 +264,10 @@ if __name__ == '__main__':
     #csvfile = open(directory+"{}_{}_{}_{}".format(str(int(float(sys.argv[1])*100)), str(int(float(sys.argv[2])*10)), str(int(sys.argv[5])), str(int(sys.argv[6])))+".csv", 'w', newline='')
     writer = csv.writer(csvfile, delimiter=',')
     writer.writerow(["Hour", "Best_Action", "Best_Bill"])
-    start_point = int(sys.argv[5])
-    end_point = int(sys.argv[6])
+    #start_point = int(sys.argv[5])
+    #end_point = int(sys.argv[6])
+    start_point = 0
+    end_point = 8616
 
     
     #print('Testing')
@@ -286,7 +288,7 @@ if __name__ == '__main__':
     for i in range (start_point,end_point,MAX_EP_STEPS):
         #sess.run(tf.initialize_all_variables())
         agent = Agent(state_dim=state_dim, action_dim=1, max_action=MAX_CHARGE_RATE)
-        stats = run(env, i, current_soc, agent, 500, discount_factor=1)
+        stats = run(env, i, current_soc, agent, 50, discount_factor=1)
         print(day_count)
         day_count += 1
 
