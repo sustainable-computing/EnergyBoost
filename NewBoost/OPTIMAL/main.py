@@ -131,7 +131,7 @@ def compute(hour_var,battery_var,last):
     global total_reward
     A = np.zeros(MAX_TS)
     L = table['use'][hour_var:MAX_TS+hour_var].values
-    #L = L/2
+    L = L/2
     G = table['ac'][hour_var:MAX_TS+hour_var].values
     #print(L)
     #print(G)
