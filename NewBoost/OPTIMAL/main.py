@@ -1,5 +1,5 @@
 import sys
-#sys.path.append("/home/zishan/Documents/")
+#sys.path.append("/home/zishan/Documents/EnergyBoost")
 sys.path.append("/home/azishan/EnergyBoost")
 
 
@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 input_file = sys.argv[4]
 solar_export_rate =  float(sys.argv[1])
 b_cap = float(sys.argv[2])
+state=[]
 max_rate = float(sys.argv[3])
 homeid= sys.argv[4].split(".")[2].split("_")[2]
 print("-homeid-------------------",homeid)
@@ -71,7 +72,7 @@ price_weekend = np.tile(np.array([0.065]), 24)
 # # weekly price starting from Monday
 # P_grid = np.tile(price_week, numweeks)
 # #P_grid = np.array([0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.065, 0.132, 0.132, 0.132, 0.132, 0.094, 0.094, 0.094, 0.094, 0.094, 0.094, 0.132, 0.132, 0.065, 0.065, 0.065, 0.065, 0.065])
-P_table = pd.read_csv('../data/price_final.csv')
+#P_table = pd.read_csv('../data/price_tou.csv')
 
 P_solar = solar_export_rate*np.ones(MAX_TS)
 #P_solar = -P_grid
@@ -93,38 +94,77 @@ battery_init = 0.5*b_cap
 current_soc = battery_init
 total_reward= 0
 
+def init_ground_truth(datafile):
+    print("init_ground_truth")
+
+
+    if not os.path.exists(datafile):
+        print("No datafile was found. Run generatepower.py first.")
+        raise ValueError
+
+    with open(datafile, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        row_count = sum(1 for _ in reader)
+
+    #with open("processed_hhdata_26_result.csv", 'r') as csvfile:
+    with open(datafile, 'r') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',')
+        row_number = 0
+
+        for row in reader:
+
+            row_number += 1
+
+            if row_number == 1:
+                continue
+            #print(row)
+
+            state.append(row)
+
+
+            print("\rEnvironment setup progress: %5.2f%%" % (row_number * 100 / row_count), end='')
+
+    print("\rEnvironment setup finished. Total %i lines data." % row_count)
 
 def compute(hour_var,battery_var,last):
     global current_soc
     global total_reward
     A = np.zeros(MAX_TS)
     L = table['use'][hour_var:MAX_TS+hour_var].values
-    L = L/2
+    #L = L/2
     G = table['ac'][hour_var:MAX_TS+hour_var].values
+    #print(L)
+    #print(G)
     #P_grid = np.array([])
-    P_grid = P_table['price'][hour_var:MAX_TS+hour_var].values
-    # for i in range(hour_var,hour_var+24*7*1,24):
-    #     #print('first hour of day',i)
-    #     month = table['month'].iloc[i]
-    #     hour = table['hour'].iloc[i]
-    #     week = table['is_weekday'].iloc[i]
-    #
-    #     if month <=4 or month >= 11:
-    #         #print("winter")
-    #         if week:
-    #             #print("weekday")
-    #             P_grid = np.append(P_grid,price_weekday_winter)
-    #         else:
-    #             #print("weekend")
-    #             P_grid = np.append(P_grid,price_weekend)
-    #     else:
-    #         #print("summer")
-    #         if week:
-    #             #print("weekday")
-    #             P_grid = np.append(P_grid,price_weekday_summer)
-    #         else:
-    #             #print("weekend")
-    #             P_grid = np.append(P_grid,price_weekend)
+    #P_grid = P_table['price'][hour_var:MAX_TS+hour_var].values
+    P_grid = np.array([])
+    #P_grid = P_table['price'][hour_var:MAX_TS+hour_var].values
+    #for i in range(hour_var,hour_var+24,24):
+        #print('first hour of day',i)
+        # month = table['month'].iloc[i]
+        # hour = table['hour'].iloc[i]
+        # week = table['is_weekday'].iloc[i]
+    month = float(state[hour_var][7])
+    hour = float(state[hour_var][8])
+    week = float(state[hour_var][6])
+
+
+    if month <=4 or month >= 11:
+        #print("winter")
+        if week:
+            #print("weekday")
+            P_grid = np.append(P_grid,price_weekday_winter)
+        else:
+            #print("weekend")
+            P_grid = np.append(P_grid,price_weekend)
+    else:
+        #print("summer")
+        if week:
+            #print("weekday")
+            P_grid = np.append(P_grid,price_weekday_summer)
+        else:
+            #print("weekend")
+            P_grid = np.append(P_grid,price_weekend)
 
 
 
@@ -190,10 +230,12 @@ def compute(hour_var,battery_var,last):
         writer.writerow([hour_var+t,A[t],total_reward])
         
     #total_reward = total_reward + objective.value
+    #print(total_reward)
     current_soc = E[MAX_TS].value
 
 
 if __name__ == '__main__':
+    init_ground_truth(sys.argv[4])
     directory="result_{}".format(homeid)
     if not os.path.exists(directory):
         os.makedirs(directory)
