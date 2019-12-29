@@ -1,6 +1,0 @@
-/home/azishan/ENV/lib/python3.6/site-packages/sklearn/externals/joblib/__init__.py:15: DeprecationWarning: sklearn.externals.joblib is deprecated in 0.21 and will be removed in 0.23. Please import this functionality directly from joblib, which can be installed with: pip install joblib. If this warning is raised when loading pickled models, you may need to re-serialize those models with scikit-learn 0.21+.
-  warnings.warn(msg, category=DeprecationWarning)
-/home/azishan/ENV/lib/python3.6/site-packages/sklearn/base.py:306: UserWarning: Trying to unpickle estimator DecisionTreeRegressor from version 0.19.1 when using version 0.21.2. This might lead to breaking code or invalid results. Use at your own risk.
-  UserWarning)
-/home/azishan/ENV/lib/python3.6/site-packages/sklearn/base.py:306: UserWarning: Trying to unpickle estimator RandomForestRegressor from version 0.19.1 when using version 0.21.2. This might lead to breaking code or invalid results. Use at your own risk.
-  UserWarning)

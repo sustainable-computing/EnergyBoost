@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/home/zishan/Documents/")
+sys.path.append("/home/zishan/Documents/EnergyBoost/")
 #sys.path.append("/home/azishan/")
 #import tensorflow as tf
 import numpy as np
@@ -10,7 +10,7 @@ import csv
 import shutil
 import math
 import pathlib
-from NewBoost.env.environment_base import EnergyEnvironment
+from NewBoost.env.environment import EnergyEnvironment
 
 # MAX_EPISODES = 1
 # MAX_EP_STEPS = 24 * 30
@@ -37,11 +37,11 @@ LOAD = False
 #
 # STATE_DIM = 10
 # ACTION_DIM = 1
-# MAX_CHARGE_RATE = float(sys.argv[3])
+MAX_CHARGE_RATE = float(sys.argv[3])
 # ACTION_BOUND = [-MAX_CHARGE_RATE, MAX_CHARGE_RATE]
 
 
-def pre_train(episodes):
+def pre_train(episodes, a_list):
     """
     learn the rule based policy for a year
     charge at max rate when solar tariff is low
@@ -58,6 +58,7 @@ def pre_train(episodes):
     actions_base=[]
     bill_base=[]
     soc_base=[]
+    
     for ep in range(episodes):
         grid_base=[]
         s = env.reset()
@@ -66,7 +67,7 @@ def pre_train(episodes):
         for t in range(MAX_EP_STEPS):
 
             ACTION_BOUND = [-min(env.state[env.current_index][8], env.state[env.current_index][5], MAX_CHARGE_RATE), min((env.maximum_battery - env.state[env.current_index][8]), MAX_CHARGE_RATE)]
-
+            """
             if s[7] ==0: #weekends
                 a=0
             else: #weekdays
@@ -98,19 +99,21 @@ def pre_train(episodes):
                         else:
                             a=0
 
-
-
+            """
+            a = np.clip(a_list[t], *ACTION_BOUND)
             if ep==0:
                 actions_base.append(a)
             # 1 if it is ddpg, 0 for not
+            
             tng,s_, r, done = env.step(a)
             #print(r)
             #print("this is base grid", tng)
-            grid_base.append(tng)
-            soc_base.append(s_[8])
+            #grid_base.append(tng)
+            #soc_base.append(s_[8])
 
             s = s_
             ep_reward += r
+            #print(r)
             if ep==0:
                 bill_base.append(-ep_reward)
 
@@ -122,7 +125,7 @@ def pre_train(episodes):
                 break
 
     for i in range(len(actions_base)):
-        writer.writerow([i,actions_base[i],bill_base[i],grid_base[i],soc_base[i]])
+        writer.writerow([i,actions_base[i],bill_base[i]])
     print("len of best actions",len(actions_base))
     print("len of best bill",len(bill_base))
     print("Generating baseline done.")
@@ -136,7 +139,7 @@ if __name__ == '__main__':
         #train(2, [0.33717483][0], 0)
         MAX_EP_STEPS = 8616
         MAX_CHARGE_RATE = float(sys.argv[3])
-        env = EnergyEnvironment()
+        env = EnergyEnvironment(MAX_CHARGE_RATE)
         #env.two_meter = False
         env.sell_back = float(sys.argv[1])
         env.maximum_battery = float(sys.argv[2])
@@ -158,7 +161,8 @@ if __name__ == '__main__':
             os.makedirs(directory)
         csvfile = open(directory+"/sb".format(homeid)+str(abs(int(float(sys.argv[1])*100)))+"b"+str(int(float(sys.argv[2])*10))+".csv", 'w', newline='')
         writer = csv.writer(csvfile, delimiter=',')
-        writer.writerow(["Hour", "Base_Action","Base_Bill","Base_Grid","Base_Soc"])
+        writer.writerow(["Hour", "Best_Action","Best_Bill"])
         env.month_starter = 0
-        pre_train(1)
+        a_list = pd.read_csv("../MPC/result_" + str(homeid) + "/" + "sb" + str(int(float(sys.argv[1])*100)) + "b" + str(int(float(sys.argv[2])*10)) + ".csv")["Best_Action"]
+        pre_train(1, a_list)
         csvfile.close()
