@@ -288,7 +288,7 @@ if __name__ == '__main__':
     for i in range (start_point,end_point,MAX_EP_STEPS):
         #sess.run(tf.initialize_all_variables())
         agent = Agent(state_dim=state_dim, action_dim=1, max_action=MAX_CHARGE_RATE, policy_noise=0.2*MAX_CHARGE_RATE, noise_clip=0.5*MAX_CHARGE_RATE)
-        stats = run(env, i, current_soc, agent, 100, discount_factor=1)
+        stats = run(env, i, current_soc, agent, 50, discount_factor=1)
         print(day_count)
         day_count += 1
 
@@ -296,4 +296,4 @@ if __name__ == '__main__':
     sell_back_round=int(float(sys.argv[1])*100)
     battery_round=int(float(sys.argv[2])*10)
     # plot the stat results
-    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/SAC_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round),smoothing_window=10)
+    #plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/SAC_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round),smoothing_window=10)

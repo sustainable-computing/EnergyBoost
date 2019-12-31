@@ -415,7 +415,7 @@ if __name__ == '__main__':
         # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
         for i in range (start_point,end_point,MAX_EP_STEPS):
             sess.run(tf.initialize_all_variables())
-            stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 100, discount_factor=1)
+            stats = actor_critic(env, i, current_soc, policy_estimator, value_estimator, 50, discount_factor=1)
             print(day_count)
             day_count += 1
 
@@ -423,4 +423,4 @@ if __name__ == '__main__':
     sell_back_round=int(float(sys.argv[1])*100)
     battery_round=int(float(sys.argv[2])*10)
     # plot the stat results
-    plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/A2C_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round), smoothing_window=10)
+    #plotting.plot_episode_stats(stats,homeid,sell_back_round,battery_round,name=directory+'/A2C_'+str(homeid)+"_"+str(sell_back_round)+"_"+str(battery_round), smoothing_window=10)
