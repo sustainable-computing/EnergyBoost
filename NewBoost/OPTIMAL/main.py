@@ -1,6 +1,6 @@
 import sys
-#sys.path.append("/home/zishan/Documents/EnergyBoost")
-sys.path.append("/home/azishan/EnergyBoost")
+sys.path.append("/home/zishan/Documents/EnergyBoost")
+#sys.path.append("/home/azishan/EnergyBoost")
 
 
 # !pip install cvxpy
